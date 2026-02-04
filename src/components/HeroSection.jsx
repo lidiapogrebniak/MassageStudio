@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import slide1 from '../../public/images/slide1.png';
 import slide2 from '../../public/images/slide2.png';
 import slide3 from '../../public/images/slide3.png';
+import slide4 from '../../public/images/slide4.png';
 
 const HeroSection = () => {
   return (
@@ -18,12 +19,31 @@ const HeroSection = () => {
                     <div className="carousel-inner">
                         <div className="carousel-item active">
                         <img className="d-block w-100" src={slide1} alt="First slide"/>
+                        <div className="carousel-caption d-none d-md-block">
+                            <h5>{texts.heroCarousel.slide1.title}</h5>
+                            <p>{texts.heroCarousel.slide1.description}</p>
+                        </div>
                         </div>
                         <div className ="carousel-item">
-                        <img className="d-block w-100" src={slide2} alt="Second slide"/>
+                            <img className="d-block w-100" src={slide2} alt="Second slide"/>
+                            <div className="carousel-caption d-none d-md-block">
+                                <h5>{texts.heroCarousel.slide2.title}</h5>
+                                <p>{texts.heroCarousel.slide2.description}</p>
+                            </div>
                         </div>
                         <div className="carousel-item">
                         <img className="d-block w-100" src={slide3} alt="Third slide"/>
+                        <div className="carousel-caption d-none d-md-block">
+                            <h5>{texts.heroCarousel.slide3.title}</h5>
+                            <p>{texts.heroCarousel.slide3.description}</p>
+                        </div>
+                        </div>
+                        <div className="carousel-item">
+                        <img className="d-block w-100" src={slide4} alt="Fourth slide"/>
+                        <div className="carousel-caption d-none d-md-block about-me-caption">
+                            <h5>{texts.heroCarousel.slide4.title}</h5>
+                            <p>{texts.heroCarousel.slide4.description}</p>
+                        </div>
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselHero" data-bs-slide="prev">

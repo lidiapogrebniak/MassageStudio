@@ -13,7 +13,7 @@ const NavBar = () => {
 
   return (
     <>
-        <nav className="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <nav className="navbar navbar-expand-lg navbar-light">
              <div className="container">
 
                 <Link to="/" className="navlogo navbar-brand">

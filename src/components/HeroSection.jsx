@@ -1,7 +1,8 @@
 import React from 'react'
 import '../styles/HeroSection.css';
 import { texts } from '../utils/texts.uk';
-import { Link } from 'react-router-dom';
+import { Carousel } from 'react-bootstrap';
+import MassageButton from './MassageButton';
 import slide1 from '../../public/images/slide1.png';
 import slide2 from '../../public/images/slide2.png';
 import slide3 from '../../public/images/slide3.png';
@@ -10,53 +11,44 @@ import slide4 from '../../public/images/slide4.png';
 const HeroSection = () => {
   return (
     <section
-      className="position-relative overflow-hidden d-flex align-items-center justify-content-center text-center hero-section"
+      className="section hero-section"
     >
-        <div className="container">
-            <div className="row justify-content-center">
-                <div id="carouselHero" className="carousel slide" data-bs-ride="carousel">
 
-                    <div className="carousel-inner">
-                        <div className="carousel-item active">
-                        <img className="d-block w-100" src={slide1} alt="First slide"/>
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>{texts.heroCarousel.slide1.title}</h5>
-                            <p>{texts.heroCarousel.slide1.description}</p>
-                        </div>
-                        </div>
-                        <div className ="carousel-item">
-                            <img className="d-block w-100" src={slide2} alt="Second slide"/>
-                            <div className="carousel-caption d-none d-md-block">
-                                <h5>{texts.heroCarousel.slide2.title}</h5>
-                                <p>{texts.heroCarousel.slide2.description}</p>
-                            </div>
-                        </div>
-                        <div className="carousel-item">
-                        <img className="d-block w-100" src={slide3} alt="Third slide"/>
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>{texts.heroCarousel.slide3.title}</h5>
-                            <p>{texts.heroCarousel.slide3.description}</p>
-                        </div>
-                        </div>
-                        <div className="carousel-item">
-                        <img className="d-block w-100" src={slide4} alt="Fourth slide"/>
-                        <div className="carousel-caption d-none d-md-block about-me-caption">
-                            <h5>{texts.heroCarousel.slide4.title}</h5>
-                            <p>{texts.heroCarousel.slide4.description}</p>
-                        </div>
-                        </div>
-                    </div>
-                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselHero" data-bs-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Previous</span>
-                    </button>
-                    <button className="carousel-control-next" type="button" data-bs-target="#carouselHero" data-bs-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <Carousel fade={true} indicators={false} controls={false} interval={8000} pause={false}>
+            <Carousel.Item>
+                <img className="d-block w-100" src={slide1} alt="First slide"/>
+                <Carousel.Caption>
+                    <h5>{texts.heroCarousel.slide1.title}</h5>
+                    <p>{texts.heroCarousel.slide1.description}</p>
+                    <MassageButton />
+                </Carousel.Caption>
+
+            </Carousel.Item>
+            <Carousel.Item>
+                <img className="d-block w-100" src={slide2} alt="Second slide"/>
+                <Carousel.Caption>
+                    <h5>{texts.heroCarousel.slide2.title}</h5>
+                    <p>{texts.heroCarousel.slide2.description}</p>
+                    <MassageButton />
+                </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+                <img className="d-block w-100" src={slide3} alt="Third slide"/>
+                <Carousel.Caption>
+                    <h5>{texts.heroCarousel.slide3.title}</h5>
+                    <p>{texts.heroCarousel.slide3.description}</p>
+                    <MassageButton />
+                </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+                <img className="d-block w-100" src={slide4} alt="Fourth slide"/>
+                <Carousel.Caption>
+                    <h5>{texts.heroCarousel.slide4.title}</h5>
+                    <p>{texts.heroCarousel.slide4.description}</p>
+                    <MassageButton />
+                </Carousel.Caption>
+            </Carousel.Item>
+        </Carousel>
     </section>
   )
 }

@@ -14,7 +14,7 @@ const HeroSection = () => {
       className="section hero-section"
     >
 
-        <Carousel fade={true} indicators={false} controls={false} interval={8000} pause={false}>
+        <Carousel fade={true} indicators={true} controls={true} interval={8000} pause={false}>
             <Carousel.Item>
                 <img className="d-block w-100" src={slide1} alt="First slide"/>
                 <Carousel.Caption>

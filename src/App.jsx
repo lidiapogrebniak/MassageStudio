@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './components/Header.jsx';
+import Footer from './components/Footer.jsx';
 import Home from './components/Home.jsx';
 import About from './components/About.jsx';
 import Services from './components/Services.jsx';
@@ -21,6 +22,7 @@ function App() {
         <Header />
         <HeroSection />
         <Home />
+        <Footer />
     </>
   );
 }

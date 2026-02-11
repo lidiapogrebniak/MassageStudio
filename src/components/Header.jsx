@@ -1,5 +1,6 @@
 import React from 'react'
-import { FaPhone, FaTelegramPlane, FaViber, FaInstagram } from 'react-icons/fa';
+import { FaPhoneAlt, FaTelegramPlane, FaViber, FaInstagram } from 'react-icons/fa';
+import { FaLocationDot } from 'react-icons/fa6';
 import {Link} from "react-router-dom";
 import logo from '../../public/images/logo.png';
 import '../styles/Header.css';
@@ -11,9 +12,11 @@ const NavBar = () => {
       navburger.classList.toggle("toggle");
     };
 
+const telephoneShort = texts.contacts.phone.replace(/\D/g, '');
+
   return (
     <>
-        <nav className="navbar navbar-expand-lg navbar-light">
+        <nav className="navbar bg-white sticky-top navbar-expand-lg navbar-light">
              <div className="container">
 
                 <Link to="/" className="navlogo navbar-brand">
@@ -39,59 +42,67 @@ const NavBar = () => {
                     className="navbar-nav me-auto mb-2 mb-lg-0 ms-auto"
                     >
                         <li className="nav-item">
-                            <Link className='nav-link' to="/">{texts.header.home}</Link>
+                            <Link className='nav-link' to="/">{texts.pages.home}</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className='nav-link' to="/about">{texts.header.about}</Link>
+                            <Link className='nav-link' to="/about">{texts.pages.about}</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className='nav-link' to="/services">{texts.header.services}</Link>
+                            <Link className='nav-link' to="/services">{texts.pages.services}</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className='nav-link' to="/contacts">{texts.header.contacts}</Link>
+                            <Link className='nav-link' to="/contacts">{texts.pages.contacts}</Link>
                         </li>
                     </ul>
 
                     <div className="d-block d-lg-none contact-info-separator"></div>
-                    {/* Contact Info & Language Switcher */}
-                    <div className="d-flex align-items-center gap-3 contact-info">
-                    {/* Phone */}
-                    <a
-                        href={`tel:+380501234567`}
-                        className="d-flex align-items-center gap-2 text-decoration-none nav-link phone-link"
-                    >
-                        <FaPhone size={18} />
-                        <span>+38(050)123-45-67</span>
-                    </a>
+                    {/* Contact Info */}
+                    <div className="d-flex align-items-center gap-3 ">
+                        {/* Location */}
+                        <a
+                            href={texts.contacts.googleMapsLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="d-flex align-items-center gap-2 text-decoration-none nav-link phone-link"
 
-                    {/* Social Media Icons */}
-                    <div className="d-flex gap-2">
-                        <a
-                        href="https://t.me/vadhiveda"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-sm rounded-circle social-icon-link"
                         >
-                            <FaTelegramPlane />
+                            <FaLocationDot />
+                            <span>{texts.contacts.locationCity}</span>
                         </a>
-                        <a
-                        href="viber://chat?number=380501234567"
-                        className="btn btn-sm rounded-circle social-icon-link"
-                        >
-                        <FaViber />
-                        </a>
-                        <a
-                        href="https://instagram.com/vadhiveda"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-sm rounded-circle social-icon-link"
-                        >
-                        <FaInstagram />
-                        </a>
+                        <div className="d-flex gap-2 contact-info">
+                            {/* Phone */}
+                            <a
+                                href={`tel:${telephoneShort}`}
+                                className="btn btn-sm rounded-circle social-icon-link"
+                            >
+                                <FaPhoneAlt />
+                            </a>
+                            <a
+                            href="https://t.me/vadhiveda"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-sm rounded-circle social-icon-link"
+                            >
+                                <FaTelegramPlane />
+                            </a>
+                            <a
+                            href={`viber://chat?number=${telephoneShort}`}
+                            className="btn btn-sm rounded-circle social-icon-link"
+                            >
+                            <FaViber />
+                            </a>
+                            <a
+                            href="https://instagram.com/vadhiveda"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-sm rounded-circle social-icon-link"
+                            >
+                            <FaInstagram />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-          </div>
         </nav>
     </>
   )

@@ -1,6 +1,6 @@
   :root {
     --nav-links-color: #333;
-    --nav-links-hover-color: #757575;
+    --nav-links-hover-color: #d4a574;
     --nav-links-hover-bg: #f5f0eb;
   }
 
@@ -8,9 +8,8 @@
     height: 60px;
   }
 
-  .navbar {
-    box-shadow: 0 2px 0 rgba(255,255,255,0.1);
-    background-color: rgba(255, 255, 255, 0.9);
+  .navbar-brand {
+    outline: none;
   }
 
   .navbar-nav{
@@ -49,8 +48,4 @@
 
   .social-icon-link:hover {
     background-color: #e8e0d8;
-  }
-
-  .phone-link span {
-    text-wrap: nowrap;
   }

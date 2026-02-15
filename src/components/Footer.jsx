@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/Footer.css';
 import logoImage from "../../public/images/logo.png";
-import { texts } from '../utils/texts.uk';
+import { texts } from '../data/texts.uk';
 import { FaClock, FaPhoneAlt } from 'react-icons/fa';
 import { FaLocationDot, FaEnvelope } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';

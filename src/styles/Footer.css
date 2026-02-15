@@ -1,8 +1,7 @@
 
 .footer {
    padding-top: 5rem;
-   padding-bottom: 2rem;
-   margin-top: 5rem;
+   padding-bottom: 7rem;
 }
 .brand-logo > img {
    height: 50px;
@@ -34,4 +33,8 @@ a.footer-link:hover {
 .footer .schedule {
     align-items: center !important;
     color: #5a5a5a;
+}
+
+.footer .schedule .schedule-text {
+    text-align: left;
 }

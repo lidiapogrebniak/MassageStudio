@@ -1,6 +1,6 @@
 import React from 'react'
 import '../styles/HeroSection.css';
-import { texts } from '../utils/texts.uk';
+import { texts } from '../data/texts.uk';
 import { Carousel } from 'react-bootstrap';
 import MassageButton from './MassageButton';
 import slide1 from '../../public/images/slide1.png';

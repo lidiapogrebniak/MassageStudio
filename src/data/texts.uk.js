@@ -38,6 +38,10 @@ export const texts = {
         phone: '+38(050)123-45-67',
         googleMapsLink: 'https://maps.app.goo.gl/fNeer23ZgyjMiBrm8'
     },
+    services: {
+        title: 'Наші послуги',
+        subscribeBtn: 'Записатись'
+    },
     footer: {
         contacts: 'Контакти',
         schedule: 'Графік роботи',

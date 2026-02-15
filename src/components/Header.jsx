@@ -4,7 +4,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import {Link} from "react-router-dom";
 import logo from '../../public/images/logo.png';
 import '../styles/Header.css';
-import { texts } from '../utils/texts.uk'; '../utils/texts.uk.js';
+import { texts } from '../data/texts.uk'; '../utils/texts.uk.js';
 
 const NavBar = () => {
     const navSlide = () => {

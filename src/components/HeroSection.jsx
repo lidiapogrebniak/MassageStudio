@@ -3,10 +3,6 @@ import '../styles/HeroSection.css';
 import { texts } from '../data/texts.uk';
 import { Carousel } from 'react-bootstrap';
 import MassageButton from './MassageButton';
-import slide1 from '../../public/images/slide1.png';
-import slide2 from '../../public/images/slide2.png';
-import slide3 from '../../public/images/slide3.png';
-import slide4 from '../../public/images/slide4.png';
 
 const HeroSection = () => {
   return (
@@ -16,7 +12,7 @@ const HeroSection = () => {
 
         <Carousel fade={true} indicators={true} controls={true} interval={8000} pause={false}>
             <Carousel.Item>
-                <img className="d-block w-100" src={slide1} alt="First slide"/>
+                <img className="d-block w-100" src="/images/carousel/slide1.png" alt="First slide"/>
                 <Carousel.Caption>
                     <h5>{texts.heroCarousel.slide1.title}</h5>
                     <p>{texts.heroCarousel.slide1.description}</p>
@@ -25,7 +21,7 @@ const HeroSection = () => {
 
             </Carousel.Item>
             <Carousel.Item>
-                <img className="d-block w-100" src={slide2} alt="Second slide"/>
+                <img className="d-block w-100" src="/images/carousel/slide2.png" alt="Second slide"/>
                 <Carousel.Caption>
                     <h5>{texts.heroCarousel.slide2.title}</h5>
                     <p>{texts.heroCarousel.slide2.description}</p>
@@ -33,7 +29,7 @@ const HeroSection = () => {
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
-                <img className="d-block w-100" src={slide3} alt="Third slide"/>
+                <img className="d-block w-100" src="/images/carousel/slide3.png" alt="Third slide"/>
                 <Carousel.Caption>
                     <h5>{texts.heroCarousel.slide3.title}</h5>
                     <p>{texts.heroCarousel.slide3.description}</p>
@@ -41,7 +37,7 @@ const HeroSection = () => {
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
-                <img className="d-block w-100" src={slide4} alt="Fourth slide"/>
+                <img className="d-block w-100" src="/images/carousel/slide4.png" alt="Fourth slide"/>
                 <Carousel.Caption>
                     <h5>{texts.heroCarousel.slide4.title}</h5>
                     <p>{texts.heroCarousel.slide4.description}</p>

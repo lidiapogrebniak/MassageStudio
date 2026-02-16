@@ -23,7 +23,7 @@ const ServicesSection = () => {
                 {massages.map(m => (
                     <div key={m.id} className="col-12 col-sm-6 col-lg-3 service-card">
                         <div className='card border-0 shadow-sm h-100'>
-                            <img src={`/images/${m.img}`} alt={m.title} className="card-img" />
+                            <img src={`/images/massages/${m.img}`} alt={m.title} className="card-img" />
                             <div className="card-body d-flex flex-column">
                                 <h3 className='card-title h5 mb-3'>{m.title}</h3>
                                 <div className='d-flex justify-content-between align-items-center mb-3 mt-auto'>

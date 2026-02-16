@@ -1,21 +1,22 @@
 import React from 'react'
 import '../styles/Footer.css';
-import logoImage from "../../public/images/logo.png";
 import { texts } from '../data/texts.uk';
 import { FaClock, FaPhoneAlt } from 'react-icons/fa';
 import { FaLocationDot, FaEnvelope } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
-const telephoneShort = texts.contacts.phone.replace(/\D/g, '');
 
-const Footer = () => {
+const Footer = (props) => {
+  const { contacts } = props;
+  const telephoneShort = contacts.phone && contacts.phone.replace(/\D/g, '');
+
   return (
     <footer className="footer bg-light text-center border-top">
       <div className="container">
         <div className="row g-4 pb-4 mb-4 border-bottom">
           <div className="col-12 col-lg-5">
             <Link to="/" className="brand-logo">
-              <img src={logoImage} alt="Vadhiveda" />
+              <img src="/images/logo.png" alt="Vadhiveda" />
             </Link>
             <p className="text-muted about-text">
               {texts.brand.aboutText}
@@ -33,8 +34,12 @@ const Footer = () => {
                     <div className="d-flex align-items-start schedule">
                         <FaClock size={18} />
                     <div className='schedule-text'>
-                        <div>{texts.footer.scheduleDetails.workdays}</div>
-                        <div>{texts.footer.scheduleDetails.weekends}</div>
+                        {contacts.scheduleDetails && (
+                            <>
+                            <div>{contacts.scheduleDetails.workdays}</div>
+                            <div>{contacts.scheduleDetails.weekends}</div>
+                            </>
+                        )}
                     </div>
                     </div>
                 </li>
@@ -55,27 +60,27 @@ const Footer = () => {
                     className="footer-link d-flex align-items-center text-decoration-none"
                     >
                         <FaPhoneAlt size={18} />
-                        <span>{texts.contacts.phone}</span>
+                        <span>{contacts.phone}</span>
                     </a>
                 </li>
                 <li className="mb-3">
                     <a
-                    href={`mailto:${texts.contacts.mail}`}
+                    href={`mailto:${contacts.mail}`}
                     className="footer-link d-flex align-items-center text-decoration-none"
                     >
                     <FaEnvelope size={16}/>
-                    <span>{texts.contacts.mail}</span>
+                    <span>{contacts.mail}</span>
                     </a>
                 </li>
                 <li className="mb-3">
                     <a
-                    href={texts.contacts.googleMapsLink}
+                    href={contacts.googleMapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="footer-link d-flex align-items-center text-decoration-none"
                     >
                     <FaLocationDot size={16} />
-                    <span>{texts.contacts.address}</span>
+                    <span>{contacts.address}</span>
                     </a>
                 </li>
                 </ul>

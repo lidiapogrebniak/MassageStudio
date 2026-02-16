@@ -9,8 +9,16 @@ import NotFound from './components/NotFound.jsx';
 import { Routes, Route } from 'react-router-dom';
 import HeroSection from './components/HeroSection.jsx';
 import ServicesSection from './components/ServicesSection.jsx';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [contacts, setContacts] = useState({});
+
+      useEffect(() => {
+          fetch('/data/data.json')
+          .then(res => res.json())
+          .then(data => setContacts(data));
+      }, []);
   return (
     <>
         <Routes>
@@ -20,11 +28,11 @@ function App() {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="*" element={<NotFound />} /> {/* 404 страница */}
         </Routes>
-        <Header />
+        <Header contacts={contacts} />
         <HeroSection />
         <ServicesSection />
         <Home />
-        <Footer />
+        <Footer contacts={contacts} />
     </>
   );
 }

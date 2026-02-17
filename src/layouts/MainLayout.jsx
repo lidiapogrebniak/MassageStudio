@@ -5,16 +5,16 @@ import { Suspense } from "react";
 import { useLoaderData } from "react-router-dom";
 
 function MainLayout() {
-  const contacts = useLoaderData();
+  const companyData = useLoaderData();
 
   return (
     <>
-      <Header contacts={contacts} />
+      <Header contacts={companyData.contacts} />
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>
 
-      <Footer contacts={contacts}/>
+      <Footer contacts={companyData.contacts}/>
     </>
   );
 }

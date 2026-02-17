@@ -1,0 +1,42 @@
+.card{
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+.card img {
+    aspect-ratio: 3/2;
+    object-fit: cover;
+}
+.card-body {
+    padding: 1.5rem;
+}
+.card-title {
+    color: #2c2c2c;
+    line-height: 1.4;
+}
+.card-body .price {
+    color: #d4a574;
+    font-weight: 600;
+}
+.card-body .duration {
+    color: #5a5a5a;
+    font-size: 0.9rem;
+}
+.subscribe-button {
+    background-color: #d4a574;
+    border-color: #d4a574;
+    color: #fff;
+    padding: 0.625rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+.subscribe-button:hover {
+    background-color: #c69462;
+    border-color: #d4a574;
+}

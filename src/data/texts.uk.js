@@ -34,7 +34,8 @@ export const texts = {
 
     services: {
         title: 'Наші послуги',
-        subscribeBtn: 'Записатись'
+        subscribeBtn: 'Записатись',
+        allServicesBtn: 'Усі послуги'
     },
     footer: {
         contacts: 'Контакти',

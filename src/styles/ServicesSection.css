@@ -45,3 +45,21 @@
     background-color: #c69462;
     border-color: #d4a574;
 }
+
+.all-services-btn {
+    align-items: center;
+    background-color: transparent;
+    border-color: #333;
+    color: #333;
+    display: inline-flex;
+    padding: 0.875rem 2.5rem;
+    border-radius: 50px;
+    transition: all 0.5s ease;
+    font-size: 1rem;
+    gap: 1rem;
+}
+.all-services-btn:hover {
+    background-color: #d4a574;
+    border-color: #d4a574;
+    color: #fff;
+}

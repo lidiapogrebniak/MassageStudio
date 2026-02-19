@@ -1,0 +1,46 @@
+.aboutSection {
+    background: linear-gradient(135deg, rgb(245, 240, 235) 0%, rgb(232, 224, 216) 100%);
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.aboutBlock {
+  display: flex;
+  align-items: top;
+  gap: 2rem;
+}
+
+/* Левая часть (картинка) */
+.aboutImage{
+  flex: 1;
+  display: block;
+}
+.aboutImage img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+/* Правая часть (текст) */
+.aboutText {
+  flex: 1.2;
+}
+
+.aboutText p {
+  margin-bottom: 30px;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+.aboutText h5,
+.aboutText h6,
+.aboutText ul {
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .aboutBlock {
+    flex-direction: column;
+  }
+}

@@ -1,17 +1,18 @@
-hero-section {
+heroSection {
     background: linear-gradient(135deg, #f5f0eb 0%, #e8e0d8 100%);
     min-height: 500px;
     padding-top: 5rem;
     padding-bottom: 5rem;
 }
 
-.carousel-item {
+:global(.carousel-item) {
     width: 100%;
     aspect-ratio: 16/9;
     object-fit: cover;
     object-position: top left;
+    transition: transform 2.0s ease;
 }
-.carousel-caption {
+:global(.carousel-caption) {
     color: rgba(250, 235, 215, 0.92);
     left: 2em;
     right: auto;
@@ -19,9 +20,10 @@ hero-section {
     bottom: auto;
     text-align: left;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 2;
 }
 
-.carousel-item:after {
+:global(.carousel-item):after {
   content: "";
   display: block;
   position: absolute;
@@ -33,15 +35,12 @@ hero-section {
     z-index: 1;
 }
 
-.carousel-caption {
-  z-index: 2;
+:global(.carousel-fade .active.carousel-item-start) {
+  transition: opacity 0s 2.0s;
 }
-/* change transition duration to control the speed of fade effect */
-.carousel-item {
-  transition: transform 2.0s ease;
+:global(.carousel-fade .active.carousel-item-next) {
+  transition: opacity 0s 2.0s;
 }
-
-.carousel-fade .active.carousel-item-start,
-.carousel-fade .active.carousel-item-end {
+:global(.carousel-fade .active.carousel-item-end) {
   transition: opacity 0s 2.0s;
 }

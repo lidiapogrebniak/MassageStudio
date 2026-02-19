@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/Footer.css';
+import styles from './Footer.module.css';
 import { texts } from '../data/texts.uk';
 import { FaClock, FaPhoneAlt } from 'react-icons/fa';
 import { FaLocationDot, FaEnvelope } from 'react-icons/fa6';
@@ -11,14 +11,16 @@ const Footer = (props) => {
   const telephoneShort = contacts.phone && contacts.phone.replace(/\D/g, '');
 
   return (
-    <footer className="footer bg-light text-center border-top">
+    <footer
+      className={`${styles.footer} bg-light text-center border-top`}
+    >
       <div className="container">
         <div className="row g-4 pb-4 mb-4 border-bottom">
           <div className="col-12 col-lg-5">
-            <Link to="/" className="brand-logo">
+            <Link to="/" className={styles.brandLogo}>
               <img src="/images/logo.png" alt="Vadhiveda" />
             </Link>
-            <p className="text-muted about-text">
+            <p className={`text-muted ${styles.aboutText}`}>
               {texts.brand.aboutText}
             </p>
           </div>
@@ -31,9 +33,10 @@ const Footer = (props) => {
                 </h3>
                 <ul className="list-unstyled">
                 <li className="mb-2">
-                    <div className="d-flex align-items-start schedule">
+                    <div
+                      className={`d-flex align-items-start ${styles.schedule}`}>
                         <FaClock size={18} />
-                    <div className='schedule-text'>
+                    <div className={styles.scheduleText}>
                         {contacts.scheduleDetails && (
                             <>
                             <div>{contacts.scheduleDetails.workdays}</div>
@@ -57,7 +60,7 @@ const Footer = (props) => {
                 <li className="mb-3">
                     <a
                     href={`tel:${telephoneShort}`}
-                    className="footer-link d-flex align-items-center text-decoration-none"
+                    className={`${styles.footerLink} d-flex align-items-center text-decoration-none`}
                     >
                         <FaPhoneAlt size={18} />
                         <span>{contacts.phone}</span>
@@ -66,7 +69,7 @@ const Footer = (props) => {
                 <li className="mb-3">
                     <a
                     href={`mailto:${contacts.mail}`}
-                    className="footer-link d-flex align-items-center text-decoration-none"
+                    className={`${styles.footerLink} d-flex align-items-center text-decoration-none`}
                     >
                     <FaEnvelope size={16}/>
                     <span>{contacts.mail}</span>
@@ -77,7 +80,7 @@ const Footer = (props) => {
                     href={contacts.googleMapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="footer-link d-flex align-items-center text-decoration-none"
+                    className={`${styles.footerLink} d-flex align-items-center text-decoration-none`}
                     >
                     <FaLocationDot size={16} />
                     <span>{contacts.address}</span>

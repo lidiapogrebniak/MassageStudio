@@ -15,11 +15,11 @@ async function rootLoader() {
 }
 
 // lazy loading страниц
-const Home = lazy(() => import("../pages/Home"));
-const About = lazy(() => import("../pages/About"));
+const Home = lazy(() => import("../pages/home/Home"));
+const About = lazy(() => import("../pages/about/About"));
 const Contacts = lazy(() => import("../pages/Contacts"));
 const NotFound = lazy(() => import("../pages/NotFound"));
-const Services = lazy(() => import("../pages/Services"));
+const Services = lazy(() => import("../pages/services/Services"));
 
 const router = createBrowserRouter([
   {

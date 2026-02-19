@@ -2,8 +2,8 @@ import React from 'react'
 import { FaPhoneAlt, FaTelegramPlane, FaViber, FaInstagram } from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
 import {Link} from "react-router-dom";
-import '../styles/Header.css';
-import { texts } from '../data/texts.uk'; '../utils/texts.uk.js';
+import styles from './Header.module.css';
+import { texts } from '../data/texts.uk';
 
 const Header = (props) => {
     const { contacts } = props;
@@ -16,10 +16,10 @@ const Header = (props) => {
 
   return (
     <>
-        <nav className="navbar bg-white sticky-top navbar-expand-lg navbar-light">
+        <nav className="navbar bg-white sticky-top navbar-expand-lg navbar-light border-bottom">
              <div className="container">
 
-                <Link to="/" className="navlogo navbar-brand">
+                <Link to="/" className={`${styles.navlogo} navbar-brand`}>
                     <img src="/images/logo.png" alt="Vadhiveda" className="d-inline-block align-top" />
                 </Link>
 
@@ -39,7 +39,7 @@ const Header = (props) => {
                 {/* Navigation Items - Bootstrap Collapse */}
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul
-                    className="navbar-nav me-auto mb-2 mb-lg-0 ms-auto"
+                    className={`${styles.nav} navbar-nav ms-auto`}
                     >
                         <li className="nav-item">
                             <Link className='nav-link' to="/">{texts.pages.home}</Link>
@@ -55,7 +55,9 @@ const Header = (props) => {
                         </li>
                     </ul>
 
-                    <div className="d-block d-lg-none contact-info-separator"></div>
+                    <div
+                    className={`${styles.contactInfoSeparator} d-block d-lg-none`}
+                    ></div>
                     {/* Contact Info */}
                     <div className="d-flex align-items-center gap-3 ">
                         {/* Location */}
@@ -73,7 +75,7 @@ const Header = (props) => {
                             {/* Phone */}
                             <a
                                 href={`tel:${telephoneShort}`}
-                                className="btn btn-sm rounded-circle social-icon-link"
+                                className={`btn btn-sm rounded-circle ${styles.socialIconLink}`}
                             >
                                 <FaPhoneAlt />
                             </a>
@@ -81,13 +83,13 @@ const Header = (props) => {
                             href={contacts.telegramLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="btn btn-sm rounded-circle social-icon-link"
+                            className={`btn btn-sm rounded-circle ${styles.socialIconLink}`}
                             >
                                 <FaTelegramPlane />
                             </a>
                             <a
                             href={`viber://chat?number=${telephoneShort}`}
-                            className="btn btn-sm rounded-circle social-icon-link"
+                            className={`btn btn-sm rounded-circle ${styles.socialIconLink}`}
                             >
                             <FaViber />
                             </a>
@@ -95,7 +97,7 @@ const Header = (props) => {
                             href={contacts.instagramLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="btn btn-sm rounded-circle social-icon-link"
+                            className={`btn btn-sm rounded-circle ${styles.socialIconLink}`}
                             >
                             <FaInstagram />
                             </a>

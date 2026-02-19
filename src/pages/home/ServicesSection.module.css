@@ -1,10 +1,10 @@
-.services-section {
+.servicesSection {
     background: linear-gradient(135deg, rgb(245, 240, 235) 0%, rgb(232, 224, 216) 100%);
     padding-top: 4rem;
     padding-bottom: 4rem;
 }
 
-.all-services-btn {
+.allServicesBtn {
     align-items: center;
     background-color: transparent;
     border-color: #333;
@@ -16,7 +16,7 @@
     font-size: 1rem;
     gap: 1rem;
 }
-.all-services-btn:hover {
+.allServicesBtn:hover {
     background-color: #d4a574;
     border-color: #d4a574;
     color: #fff;

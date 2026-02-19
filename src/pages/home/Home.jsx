@@ -1,6 +1,6 @@
 import React from 'react'
-import HeroSection from '../components/HeroSection';
-import ServicesSection from '../components/ServicesSection';
+import HeroSection from './HeroSection';
+import ServicesSection from './ServicesSection';
 import { useLoaderData } from 'react-router-dom';
 
 const Home = () => {

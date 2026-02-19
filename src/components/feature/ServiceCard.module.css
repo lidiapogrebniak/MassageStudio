@@ -8,26 +8,33 @@
     transform: translateY(-8px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
-.card img {
+.cardImg {
     aspect-ratio: 3/2;
     object-fit: cover;
 }
-.card-body {
+.cardBody {
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
-.card-title {
+.cardTitle {
     color: #2c2c2c;
     line-height: 1.4;
 }
-.card-body .price {
+.cardFooter {
+    margin-top: auto !important;
+}
+.price {
     color: #d4a574;
     font-weight: 600;
 }
-.card-body .duration {
+.duration {
     color: #5a5a5a;
     font-size: 0.9rem;
 }
-.subscribe-button {
+.subscribeButton {
     background-color: #d4a574;
     border-color: #d4a574;
     color: #fff;
@@ -36,7 +43,7 @@
     transition: all 0.3s ease;
     font-size: 16px;
 }
-.subscribe-button:hover {
+.subscribeButton:hover {
     background-color: #c69462;
     border-color: #d4a574;
 }

@@ -3,11 +3,11 @@
    padding-top: 5rem;
    padding-bottom: 7rem;
 }
-.brand-logo > img {
+.brandLogo > img {
    height: 50px;
    margin-bottom: 1.5rem;
 }
-.about-text {
+.aboutText {
    line-height: 1.7;
    margin-bottom: 1.5rem;
 }
@@ -19,11 +19,11 @@
     letter-spacing: 0.5px;
     font-size: 0.875rem;
 }
-a.footer-link {
+a.footerLink {
     color: #5a5a5a !important;
     transition: color 0.3s ease;
 }
-a.footer-link:hover {
+a.footerLink:hover {
     color: #d4a574 !important;
 }
 .footer svg {
@@ -35,6 +35,6 @@ a.footer-link:hover {
     color: #5a5a5a;
 }
 
-.footer .schedule .schedule-text {
+.footer .schedule .scheduleText {
     text-align: left;
 }

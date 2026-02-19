@@ -1,45 +1,45 @@
   :root {
     --nav-links-color: #333;
-    --nav-links-hover-color: #d4a574;
+    --nav-links-hover-color: var(--primary-color);
     --nav-links-hover-bg: #f5f0eb;
   }
 
-  .navlogo > img {
+  .navlogo img {
     height: 60px;
   }
 
-  .navbar-brand {
+  :global(.navbar-brand) {
     outline: none;
   }
 
-  .navbar{
+  :global(.navbar){
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important
   }
 
-  .navbar-nav{
+  :global(.navbar-nav){
     flex-grow: 1;
     flex-wrap: nowrap;
     justify-content: space-between;
   }
 
-  .navbar-collapse {
+  :global(.navbar-collapse) {
     gap: 3rem;
   }
 
-  .navbar-collapse.show .contact-info-separator {
+ .contactInfoSeparator {
     padding-top: 8px;
     border-top: rgba(75, 75, 75, 0.5) 1px solid;
 
   }
-  .nav-link {
+  :global(.nav-link) {
     color: var(--nav-links-color) !important;
   }
 
-  .nav-link:hover {
+  :global(.nav-link:hover) {
     color: var(--nav-links-hover-color) !important;
   }
 
-  .social-icon-link {
+  .socialIconLink {
     width: 36px;
     height: 36px;
     background-color: #f5f0eb;
@@ -50,6 +50,6 @@
     transition: background-color 0.3s ease;
   }
 
-  .social-icon-link:hover {
+  .socialIconLink:hover {
     background-color: #e8e0d8;
   }

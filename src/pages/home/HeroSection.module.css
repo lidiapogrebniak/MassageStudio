@@ -1,8 +1,13 @@
 .heroSection {
     background: linear-gradient(135deg, #f5f0eb 0%, #e8e0d8 100%);
-    min-height: 500px;
     padding-top: 0;
     padding-bottom: 0;
+}
+
+@media (min-width: 1200px) {
+  .heroSection {
+    min-height: 500px;
+  }
 }
 
 :global(.carousel-item) {

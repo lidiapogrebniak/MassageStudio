@@ -4,6 +4,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import {Link} from "react-router-dom";
 import styles from './Header.module.css';
 import { texts } from '../data/texts.uk';
+import { buildProfileLink } from '../utils/socialHelper';
 
 const Header = (props) => {
     const { contacts } = props;
@@ -80,7 +81,7 @@ const Header = (props) => {
                                 <FaPhoneAlt />
                             </a>
                             <a
-                            href={contacts.telegramLink}
+                            href={buildProfileLink('telegram', contacts.telegramUsername)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={`btn btn-sm rounded-circle ${styles.socialIconLink}`}
@@ -88,13 +89,13 @@ const Header = (props) => {
                                 <FaTelegramPlane />
                             </a>
                             <a
-                            href={`viber://chat?number=${telephoneShort}`}
+                            href={buildProfileLink('viber', telephoneShort)}
                             className={`btn btn-sm rounded-circle ${styles.socialIconLink}`}
                             >
                             <FaViber />
                             </a>
                             <a
-                            href={contacts.instagramLink}
+                            href={buildProfileLink('instagram', contacts.instagramUsername)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={`btn btn-sm rounded-circle ${styles.socialIconLink}`}

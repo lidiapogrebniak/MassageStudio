@@ -1,5 +1,5 @@
   :root {
-    --nav-links-color: #333;
+    --nav-links-color: #var(--link-color);
     --nav-links-hover-color: var(--primary-color);
     --nav-links-hover-bg: #f5f0eb;
   }

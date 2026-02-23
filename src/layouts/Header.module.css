@@ -4,7 +4,7 @@
     --nav-links-hover-bg: #f5f0eb;
   }
 
-  .navlogo img {
+  :global(.navbar-brand img) {
     height: 60px;
   }
 
@@ -26,17 +26,17 @@
     gap: 3rem;
   }
 
- .contactInfoSeparator {
-    padding-top: 8px;
-    border-top: rgba(75, 75, 75, 0.5) 1px solid;
-
-  }
   :global(.nav-link) {
     color: var(--nav-links-color) !important;
   }
 
   :global(.nav-link:hover) {
     color: var(--nav-links-hover-color) !important;
+  }
+
+ .contactInfoSeparator {
+    padding-top: 8px;
+    border-top: rgba(75, 75, 75, 0.5) 1px solid;
   }
 
   .socialIconLink {

@@ -2,59 +2,47 @@ import React from 'react'
 import { FaPhoneAlt, FaTelegramPlane, FaViber, FaInstagram } from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
 import {Link} from "react-router-dom";
+import {Nav, Navbar, Container} from "react-bootstrap"
 import styles from './Header.module.css';
 import { texts } from '../data/texts.uk';
 import { buildProfileLink } from '../utils/socialHelper';
+import { useState } from 'react';
 
 const Header = (props) => {
     const { contacts } = props;
-    const navSlide = () => {
-      const navburger = document.querySelector(".nav");
-      navburger.classList.toggle("toggle");
-    };
-
     const telephoneShort = contacts.phone && contacts.phone.replace(/\D/g, '');
+
+    const [expanded, setExpanded] = useState(false);
 
   return (
     <>
-        <nav className="navbar bg-white sticky-top navbar-expand-lg navbar-light border-bottom">
-             <div className="container">
-
-                <Link to="/" className={`${styles.navlogo} navbar-brand`}>
-                    <img src="/images/logo.png" alt="Vadhiveda" className="d-inline-block align-top" />
-                </Link>
+        <Navbar expand="lg" expanded={expanded} onToggle={() => setExpanded(!expanded)}>
+            <Container>
+                <Navbar.Brand>
+                    <Link to="/">
+                        <img src="/images/logo.png" alt="Vadhiveda" className="d-inline-block align-top" />
+                    </Link>
+                </Navbar.Brand>
 
                 {/* Mobile Toggle Button - Bootstrap */}
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+                <Navbar.Toggle aria-controls='navbarNav'/>
 
                 {/* Navigation Items - Bootstrap Collapse */}
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul
-                    className={`${styles.nav} navbar-nav ms-auto`}
-                    >
-                        <li className="nav-item">
-                            <Link className='nav-link' to="/">{texts.pages.home}</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className='nav-link' to="/about">{texts.pages.about}</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className='nav-link' to="/services">{texts.pages.services}</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className='nav-link' to="/contacts">{texts.pages.contacts}</Link>
-                        </li>
-                    </ul>
+                <Navbar.Collapse id="navbarNav">
+                    <Nav onClick={() => setExpanded(false)}>
+                        <Nav.Link as={Link} to="/">
+                            {texts.pages.home}
+                        </Nav.Link>
+                       <Nav.Link as={Link} to="/about" >
+                            {texts.pages.about}
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/services" >
+                            {texts.pages.services}
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/contacts" >
+                           {texts.pages.contacts}
+                        </Nav.Link>
+                    </Nav>
 
                     <div
                     className={`${styles.contactInfoSeparator} d-block d-lg-none`}
@@ -104,9 +92,9 @@ const Header = (props) => {
                             </a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </nav>
+                </Navbar.Collapse>
+            </Container>
+          </Navbar>
     </>
   )
 }

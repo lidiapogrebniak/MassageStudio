@@ -1,4 +1,4 @@
-import { handleContact } from "../../lib/contactService.js"
+import { handleContact } from "../../src/api/contact/contactService.js"
 
 export async function onRequestPost(context) {
   const { request, env } = context

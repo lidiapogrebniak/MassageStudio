@@ -27,6 +27,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <MainLayout />,
     loader: rootLoader,
+    hydrateFallbackElement: <div>Loading...</div>,
     children: [
 
       {

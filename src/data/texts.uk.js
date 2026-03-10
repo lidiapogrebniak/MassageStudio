@@ -63,6 +63,20 @@ export const texts = {
         instagram: 'Instagram',
         viber: 'Viber',
         writeToViber: 'Написати у Viber'
+    },
+    modal: {
+        closeBtnCaption: 'Закрити'
+    },
+    contactModal: {
+        title: 'Залишити заявку',
+        namePlaceholder: 'Ваше ім\'я',
+        phonePlaceholder: 'Ваш телефон',
+        messagePlaceholder: 'Ваше повідомлення',
+        submitBtnCaption: 'Відправити',
+        submittingBtnCaption: 'Відправка...',
+        successMessage: 'Дякую за вашу заявку! Я зв\'яжусь з вами найближчим часом.',
+        errorMessage: 'Сталася помилка при відправці форми. Будь ласка, спробуйте ще раз пізніше.',
+        timeoutErrorMessage: 'Сервер тимчасово не відповідає. Будь ласка, спробуйте ще раз пізніше.'
     }
 
 };

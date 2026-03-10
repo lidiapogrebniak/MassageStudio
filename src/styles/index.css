@@ -2,6 +2,7 @@
     --font-family: 'Arial', sans-serif;
     --primary-color: #d4a574;
     --secondary-color: #5a5a5a;
+    --secondary-color-bg: #9b9696;
     --background-color: #f5f0eb;
     --text-color: #2c2c2c;
     --linkColor: #333;
@@ -23,4 +24,48 @@ a {
 a:hover {
     color: var(--primary-color);
     text-decoration: none;
+}
+.btn{
+    border-radius: 16px;
+}
+.primaryButton {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 16px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s ease;
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+}
+.primaryButton:hover {
+    border-color: var(--primary-color);
+    background-color: #e7bc91;
+    box-shadow: 0 6px 16px rgba(212, 165, 116, 0.4);
+}
+.primaryButton.disabled, .primaryButton:disabled {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+.secondaryButton {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #f5f0eb;
+    font-size: 1rem;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+.secondaryButton:hover {
+    background-color: var(--secondary-color-bg);
+    border-color: var(--secondary-color);
+    color: #f5f0eb;
+}
+.secondaryButton.disabled, .secondaryButton:disabled {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    opacity: 0.6;
+    cursor: not-allowed;
 }

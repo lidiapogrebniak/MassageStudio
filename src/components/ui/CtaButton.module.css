@@ -13,3 +13,9 @@
     background-color: #e7bc91;
     box-shadow: 0 6px 16px rgba(212, 165, 116, 0.4);
 }
+:global(.btn-primary)
+ {
+    --bs-btn-active-bg: #e7bc91 !important;
+    --bs-btn-active-border-color: #e7bc91;
+    --bs-btn-active-color: #fff;
+}

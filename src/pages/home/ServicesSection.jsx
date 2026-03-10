@@ -7,7 +7,7 @@ import { FaArrowRight } from 'react-icons/fa6';
 
 const ServicesSection = (props) => {
 
-  let {services} = props;
+  const { services=[], onCtaButtonClick } = props;
 
   return (
     <section className={`section ${styles.servicesSection}`}>
@@ -17,7 +17,7 @@ const ServicesSection = (props) => {
             </h2>
             <div className="row g-4 mb-5">
                 {services.map(service => (
-                    <ServiceCard key={service.id} {...service} lazy={true} />
+                    <ServiceCard key={service.id} lazy={true} service={service} onCtaButtonClick={onCtaButtonClick} />
                 ))}
             </div>
             {/* All Services Button */}

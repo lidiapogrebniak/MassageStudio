@@ -5,9 +5,9 @@ import {Button} from 'react-bootstrap';
 
 
 const CtaButton = (props) => {
-  const { text, className = '' } = props;
+  const { text, className = '', onButtonClick = () => {} } = props;
   return (
-    <Button className={`btn btn-lg ${className || styles.ctaButton}`}>
+    <Button className={`btn btn-lg ${className || styles.ctaButton}`} onClick={onButtonClick}>
         {text || t.ctaButton.text}
     </Button>
   )

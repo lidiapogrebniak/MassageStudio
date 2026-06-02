@@ -1,8 +1,8 @@
 import express from "express"
-import dotenv from "dotenv"
 import { handleContact } from "../src/api/contact/contactService.js"
+import { loadEnvFile } from 'node:process';
 
-dotenv.config()
+loadEnvFile();
 
 const app = express()
 app.use(express.json())

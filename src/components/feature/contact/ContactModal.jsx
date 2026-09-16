@@ -1,8 +1,7 @@
-import {forwardRef, useRef, useImperativeHandle, useState} from 'react'
-import Modal from '../../ui/Modal';
-import ContactForm from './ContactForm';
-import { texts } from '../../../data/texts.uk';
-import { set } from 'zod';
+import { forwardRef, useRef, useImperativeHandle, useState } from "react";
+import Modal from "../../ui/Modal";
+import ContactForm from "./ContactForm";
+import { texts } from "../../../data/texts.uk";
 
 function useSendContactStatus() {
   const [state, setState] = useState("idle");
@@ -42,7 +41,6 @@ function useSendContactStatus() {
 }
 
 const ContactModal = forwardRef((props, ref) => {
-
   const modalRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const contactFormId = "contactForm";
@@ -51,31 +49,36 @@ const ContactModal = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => {
     return {
-        open: () => {
-            sendContactStatus.reset();
-            setIsModalOpen(true);
-            modalRef.current?.open();
-        },
-        close: () => {
-            sendContactStatus.reset();
-            setIsModalOpen(false);
-            modalRef.current?.close();
-        },
+      open: () => {
+        sendContactStatus.reset();
+        setIsModalOpen(true);
+        modalRef.current?.open();
+      },
+      close: () => {
+        sendContactStatus.reset();
+        setIsModalOpen(false);
+        modalRef.current?.close();
+      },
     };
   }, []);
 
   return (
-    <Modal ref={modalRef} show={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        primaryBtnCaption={texts.contactModal.submitBtnCaption}
-        primaryBtnSubmittingCaption={texts.contactModal.submittingBtnCaption}
-        heading={texts.contactModal.title}
-        submitFormId={contactFormId}
-        requestStatus={sendContactStatus}
-        >
-        <ContactForm formId={contactFormId} sendContactStatus={sendContactStatus} />
+    <Modal
+      ref={modalRef}
+      show={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      primaryBtnCaption={texts.contactModal.submitBtnCaption}
+      primaryBtnSubmittingCaption={texts.contactModal.submittingBtnCaption}
+      heading={texts.contactModal.title}
+      submitFormId={contactFormId}
+      requestStatus={sendContactStatus}
+    >
+      <ContactForm
+        formId={contactFormId}
+        sendContactStatus={sendContactStatus}
+      />
     </Modal>
-  )
-})
+  );
+});
 
-export default ContactModal
+export default ContactModal;

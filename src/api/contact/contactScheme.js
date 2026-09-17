@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { ContactErrorCodes } from "./contactErrorCodes.js";
+import { normalizePhoneE164 } from "./phone.js";
 
 export const contactSchema = z.object({
   name: z
@@ -27,14 +27,10 @@ export const contactSchema = z.object({
     })
     .trim()
     .min(1, ContactErrorCodes.PHONE_REQUIRED)
-    .refine((value) => {
-      if (value === "") return true;
-
-      const digitsOnly = value.replace(/\D/g, "");
-      return (
-        parsePhoneNumberFromString("+" + digitsOnly, "UA")?.isValid() || false
-      );
-    }, ContactErrorCodes.PHONE_INVALID),
+    .refine(
+      (value) => value === "" || !!normalizePhoneE164(value),
+      ContactErrorCodes.PHONE_INVALID,
+    ),
 
   message: z.string().max(500, ContactErrorCodes.MESSAGE_TOO_LONG).optional(),
 });

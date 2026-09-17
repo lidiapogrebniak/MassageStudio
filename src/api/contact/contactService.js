@@ -1,6 +1,7 @@
 import { validateContact } from "./validate.js";
 import { verifyTurnstile } from "./verifyTurnstile.js";
 import { checkCooldown, startCooldown } from "./contactCooldown.js";
+import { normalizePhoneE164 } from "./phone.js";
 import { ApiServerError } from "../apiErrors.js";
 
 const FORMINIT_TIMEOUT_MS = 8000;
@@ -40,7 +41,7 @@ export async function handleContact(formData, config) {
               type: "sender",
               properties: {
                 fullName: name,
-                phone: phone,
+                phone: normalizePhoneE164(phone) ?? phone,
               },
             },
             {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useEffect, useRef } from "react";
+import { useRouteLoaderData } from "react-router-dom";
 import { texts } from "../../../data/texts.uk";
 import { Alert, Spinner, Form } from "react-bootstrap";
 import { PatternFormat } from "react-number-format";
@@ -11,6 +12,8 @@ export default function ContactForm({ formId, sendContactStatus }) {
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
   const [validated, setValidated] = useState(false);
+
+  const companyPhone = useRouteLoaderData("root")?.contacts?.phone ?? "";
 
   const turnstleSiteKey = import.meta.env.VITE_TURNSTILE_API_KEY;
 
@@ -108,6 +111,18 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
       if (res.ok) {
         setMessage(texts.contactModal.successMessage);
+        sendContactStatus.resolveSuccess();
+        e.target.reset();
+        return;
+      }
+
+      if (res.status === 429) {
+        setMessage(
+          texts.contactModal.duplicateMessage.replace(
+            "{#phone}",
+            companyPhone,
+          ),
+        );
         sendContactStatus.resolveSuccess();
         e.target.reset();
         return;

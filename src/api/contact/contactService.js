@@ -1,5 +1,6 @@
 import { validateContact } from "./validate.js";
 import { verifyTurnstile } from "./verifyTurnstile.js";
+import { checkCooldown, startCooldown } from "./contactCooldown.js";
 import { ApiServerError } from "../apiErrors.js";
 
 const FORMINIT_TIMEOUT_MS = 8000;
@@ -7,8 +8,13 @@ const FORMINIT_TIMEOUT_MS = 8000;
 export async function handleContact(formData, config) {
   const { name, phone, message, captchaToken } = formData;
 
-  const { FORMINIT_URL, FORMINIT_API_KEY, TURNSTILE_SECRET, IS_PRODUCTION } =
-    config;
+  const {
+    FORMINIT_URL,
+    FORMINIT_API_KEY,
+    TURNSTILE_SECRET,
+    IS_PRODUCTION,
+    CONTACT_COOLDOWN_KV,
+  } = config;
 
   // 1. Валидация
   validateContact({ name, phone, message });
@@ -17,6 +23,8 @@ export async function handleContact(formData, config) {
   await verifyTurnstile(captchaToken, TURNSTILE_SECRET);
 
   if (IS_PRODUCTION) {
+    await checkCooldown(CONTACT_COOLDOWN_KV, phone);
+
     // 3. Отправка в ForminIt
     let response;
     try {
@@ -56,6 +64,8 @@ export async function handleContact(formData, config) {
       console.error("ForminIt error response:", errorText); // Log the error response
       throw new ApiServerError("Email service error");
     }
+
+    await startCooldown(CONTACT_COOLDOWN_KV, phone);
   }
 
   return { success: true };

@@ -1,5 +1,9 @@
 import { handleContact } from "../../src/api/contact/contactService.js";
-import { ApiServerError, ApiValidationError } from "../../src/api/apiErrors.js";
+import {
+  ApiServerError,
+  ApiValidationError,
+  ApiRateLimitError,
+} from "../../src/api/apiErrors.js";
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -12,6 +16,7 @@ export async function onRequestPost(context) {
       FORMINIT_API_KEY: env.FORMINIT_API_KEY,
       TURNSTILE_SECRET: env.TURNSTILE_SECRET,
       IS_PRODUCTION: env.IS_PRODUCTION === "true",
+      CONTACT_COOLDOWN_KV: env.CONTACT_COOLDOWN_KV,
     });
 
     return new Response(JSON.stringify(result), {
@@ -25,7 +30,7 @@ export async function onRequestPost(context) {
       });
     }
 
-    if (error instanceof ApiServerError) {
+    if (error instanceof ApiServerError || error instanceof ApiRateLimitError) {
       return new Response(JSON.stringify({ error: error.message }), {
         status: error.status,
         headers: { "Content-Type": "application/json" },

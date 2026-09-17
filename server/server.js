@@ -1,6 +1,10 @@
 import express from "express"
 import { handleContact } from "../src/api/contact/contactService.js"
-import { ApiServerError, ApiValidationError } from "../src/api/apiErrors.js"
+import {
+  ApiServerError,
+  ApiValidationError,
+  ApiRateLimitError,
+} from "../src/api/apiErrors.js"
 import { loadEnvFile } from 'node:process';
 
 loadEnvFile();
@@ -29,7 +33,7 @@ app.post("/api/contact", async (req, res) => {
       return
     }
 
-    if (error instanceof ApiServerError) {
+    if (error instanceof ApiServerError || error instanceof ApiRateLimitError) {
       res.status(error.status).json({ error: error.message })
       return
     }

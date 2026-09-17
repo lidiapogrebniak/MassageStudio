@@ -2,6 +2,8 @@ import { validateContact } from "./validate.js";
 import { verifyTurnstile } from "./verifyTurnstile.js";
 import { ApiServerError } from "../apiErrors.js";
 
+const FORMINIT_TIMEOUT_MS = 8000;
+
 export async function handleContact(formData, config) {
   const { name, phone, message, captchaToken } = formData;
 
@@ -16,29 +18,38 @@ export async function handleContact(formData, config) {
 
   if (IS_PRODUCTION) {
     // 3. Отправка в ForminIt
-    const response = await fetch(FORMINIT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-KEY": FORMINIT_API_KEY,
-      },
-      body: JSON.stringify({
-        blocks: [
-          {
-            type: "sender",
-            properties: {
-              fullName: name,
-              phone: phone,
+    let response;
+    try {
+      response = await fetch(FORMINIT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": FORMINIT_API_KEY,
+        },
+        body: JSON.stringify({
+          blocks: [
+            {
+              type: "sender",
+              properties: {
+                fullName: name,
+                phone: phone,
+              },
             },
-          },
-          {
-            type: "text",
-            name: "message",
-            value: message,
-          },
-        ],
-      }),
-    });
+            {
+              type: "text",
+              name: "message",
+              value: message,
+            },
+          ],
+        }),
+        signal: AbortSignal.timeout(FORMINIT_TIMEOUT_MS),
+      });
+    } catch (error) {
+      if (error.name === "TimeoutError") {
+        throw new ApiServerError("Email service timed out", 504);
+      }
+      throw error;
+    }
 
     if (!response.ok) {
       const errorText = await response.text();

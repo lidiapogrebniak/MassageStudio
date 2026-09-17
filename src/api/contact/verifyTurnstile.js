@@ -1,5 +1,7 @@
 import { ContactErrorCodes } from "./contactErrorCodes.js";
-import { ApiValidationError } from "../apiErrors.js";
+import { ApiValidationError, ApiServerError } from "../apiErrors.js";
+
+const TURNSTILE_TIMEOUT_MS = 8000;
 
 export async function verifyTurnstile(token, secret) {
   const throwCaptchaError = (message) => {
@@ -10,16 +12,25 @@ export async function verifyTurnstile(token, secret) {
     throwCaptchaError(ContactErrorCodes.CAPTCHA_REQUIRED);
   }
 
-  const response = await fetch(
-    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+  let response;
+  try {
+    response = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `secret=${secret}&response=${token}`,
+        signal: AbortSignal.timeout(TURNSTILE_TIMEOUT_MS),
       },
-      body: `secret=${secret}&response=${token}`,
-    },
-  );
+    );
+  } catch (error) {
+    if (error.name === "TimeoutError") {
+      throw new ApiServerError("Captcha verification timed out", 504);
+    }
+    throw error;
+  }
 
   const data = await response.json();
 

@@ -1,5 +1,6 @@
 import express from "express"
 import { handleContact } from "../src/api/contact/contactService.js"
+import { ApiServerError, ApiValidationError } from "../src/api/apiErrors.js"
 import { loadEnvFile } from 'node:process';
 
 loadEnvFile();
@@ -23,7 +24,18 @@ app.post("/api/contact", async (req, res) => {
     res.json(result)
 
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    if (error instanceof ApiValidationError) {
+      res.status(error.status).json({ fieldErrors: error.fieldErrors })
+      return
+    }
+
+    if (error instanceof ApiServerError) {
+      res.status(error.status).json({ error: error.message })
+      return
+    }
+
+    console.error("Contact request failed:", error)
+    res.status(500).json({ error: "Internal server error" })
   }
 })
 

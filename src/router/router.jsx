@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy } from "react";
 import { getFeaturedServices, getServices } from "../api/servicesApi";
+import { getCompanyData } from "../api/companyApi";
 
 import MainLayout from "../layouts/MainLayout";
 
 async function rootLoader() {
-  const res = await fetch("/data/company.json");
+  const res = await getCompanyData();
 
   if (!res.ok) {
     throw new Error("Failed to load data");
@@ -29,7 +30,6 @@ const router = createBrowserRouter([
     loader: rootLoader,
     hydrateFallbackElement: <div>Loading...</div>,
     children: [
-
       {
         index: true,
         element: <Home />,
@@ -64,7 +64,6 @@ const router = createBrowserRouter([
         path: "*",
         element: <NotFound />,
       },
-
     ],
   },
 ]);

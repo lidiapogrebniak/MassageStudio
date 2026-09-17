@@ -1,10 +1,9 @@
 import { ContactErrorCodes } from "./contactErrorCodes.js";
+import { ApiValidationError } from "../apiErrors.js";
 
 export async function verifyTurnstile(token, secret) {
-  const fieldErrors = {};
   const throwCaptchaError = (message) => {
-    fieldErrors.captcha = message;
-    throw new Error(JSON.stringify({ fieldErrors: fieldErrors }));
+    throw new ApiValidationError({ captcha: message });
   };
 
   if (!token) {

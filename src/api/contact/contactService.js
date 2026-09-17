@@ -1,5 +1,6 @@
 import { validateContact } from "./validate.js";
 import { verifyTurnstile } from "./verifyTurnstile.js";
+import { ApiServerError } from "../apiErrors.js";
 
 export async function handleContact(formData, config) {
   const { name, phone, message, captchaToken } = formData;
@@ -42,7 +43,7 @@ export async function handleContact(formData, config) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("ForminIt error response:", errorText); // Log the error response
-      throw new Error("Email service error");
+      throw new ApiServerError("Email service error");
     }
   }
 

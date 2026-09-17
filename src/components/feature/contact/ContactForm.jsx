@@ -112,27 +112,8 @@ export default function ContactForm({ formId, sendContactStatus }) {
       e.target.reset();
     } else {
       const responseJson = await res.json();
-      if (responseJson && responseJson.error) {
-        try {
-          const errorData = JSON.parse(responseJson.error);
-          if (errorData.fieldErrors) {
-            setFieldErrors(errorData.fieldErrors);
-          } else {
-            setMessage(texts.contactModal.errorMessage);
-            console.error(
-              "Unexpected error while sending message:",
-              responseJson,
-            );
-          }
-        } catch (err) {
-          setMessage(texts.contactModal.errorMessage);
-          console.error(
-            "Error parsing error response:",
-            err,
-            "Original response:",
-            responseJson,
-          );
-        }
+      if (responseJson && responseJson.fieldErrors) {
+        setFieldErrors(responseJson.fieldErrors);
       } else {
         setMessage(texts.contactModal.errorMessage);
         console.error("Unexpected error response:", responseJson);
@@ -145,11 +126,9 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
   return (
     <>
-      {sendContactStatus.isResolved ? (
+      {sendContactStatus.isSuccess ? (
         <div className="mb-3">
-          <Alert variant={sendContactStatus.isSuccess ? "success" : "danger"}>
-            {message}
-          </Alert>
+          <Alert variant="success">{message}</Alert>
         </div>
       ) : (
         <div style={{ position: "relative" }}>

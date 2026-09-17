@@ -15,6 +15,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
   const turnstleSiteKey = import.meta.env.VITE_TURNSTILE_API_KEY;
 
   const turnstileRef = useRef(null);
+  const widgetIdRef = useRef(null);
   const [token, setToken] = useState(null);
 
   const setFieldErrors = (fieldErrors) => {
@@ -27,19 +28,32 @@ export default function ContactForm({ formId, sendContactStatus }) {
     );
   };
 
+  const resetCaptcha = () => {
+    if (widgetIdRef.current !== null && window.turnstile) {
+      window.turnstile.reset(widgetIdRef.current);
+    }
+    setToken(null);
+  };
+
   useEffect(() => {
-    let widgetId = null;
     if (window.turnstile && turnstileRef.current) {
-      widgetId = window.turnstile.render(turnstileRef.current, {
+      widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
         sitekey: turnstleSiteKey,
         callback: (token) => {
           setToken(token);
         },
+        "expired-callback": () => {
+          setToken(null);
+        },
+        "error-callback": () => {
+          setToken(null);
+        },
       });
     }
     return () => {
-      if (widgetId !== null && window.turnstile) {
-        window.turnstile.remove(widgetId);
+      if (widgetIdRef.current !== null && window.turnstile) {
+        window.turnstile.remove(widgetIdRef.current);
+        widgetIdRef.current = null;
       }
     };
   }, []);
@@ -82,9 +96,8 @@ export default function ContactForm({ formId, sendContactStatus }) {
       controller.abort();
     }, 15000); // 15 секунд
 
-    let res;
     try {
-      res = await fetch("/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,6 +105,25 @@ export default function ContactForm({ formId, sendContactStatus }) {
         body: JSON.stringify(data),
         signal: controller.signal,
       });
+
+      if (res.ok) {
+        setMessage(texts.contactModal.successMessage);
+        sendContactStatus.resolveSuccess();
+        e.target.reset();
+        return;
+      }
+
+      const responseJson = await res.json();
+      if (responseJson && responseJson.fieldErrors) {
+        setFieldErrors(responseJson.fieldErrors);
+      } else {
+        setMessage(texts.contactModal.errorMessage);
+        console.error("Unexpected error response:", responseJson);
+      }
+      resetCaptcha();
+      sendContactStatus.resolveError(
+        new Error("Failed to send contact message"),
+      );
     } catch (error) {
       if (error.name === "AbortError") {
         setMessage(texts.contactModal.timeoutErrorMessage);
@@ -100,127 +132,110 @@ export default function ContactForm({ formId, sendContactStatus }) {
         setMessage(texts.contactModal.errorMessage);
         console.error("Error while sending contact message:", error);
       }
+      resetCaptcha();
       sendContactStatus.resolveError(error);
-      return;
     } finally {
       clearTimeout(timeoutId);
-    }
-
-    if (res.ok) {
-      setMessage(texts.contactModal.successMessage);
-      sendContactStatus.resolveSuccess();
-      e.target.reset();
-    } else {
-      const responseJson = await res.json();
-      if (responseJson && responseJson.fieldErrors) {
-        setFieldErrors(responseJson.fieldErrors);
-      } else {
-        setMessage(texts.contactModal.errorMessage);
-        console.error("Unexpected error response:", responseJson);
-      }
-      sendContactStatus.resolveError(
-        new Error("Failed to send contact message"),
-      );
     }
   }
 
   return (
     <>
-      {sendContactStatus.isSuccess ? (
-        <div className="mb-3">
-          <Alert variant="success">{message}</Alert>
-        </div>
-      ) : (
-        <div style={{ position: "relative" }}>
-          {sendContactStatus.isLoading && (
-            <div
-              className={`d-flex justify-content-center align-items-center ${styles.overlayContainer}`}
-            >
-              <Spinner animation="border" />
-            </div>
-          )}
-          <fieldset
-            disabled={sendContactStatus.isLoading}
-            style={{ border: "none", padding: 0 }}
+      <div className={`mb-3 ${sendContactStatus.isSuccess ? "" : "d-none"}`}>
+        <Alert variant="success">{message}</Alert>
+      </div>
+      <div
+        style={{ position: "relative" }}
+        className={sendContactStatus.isSuccess ? "d-none" : undefined}
+      >
+        {sendContactStatus.isLoading && (
+          <div
+            className={`d-flex justify-content-center align-items-center ${styles.overlayContainer}`}
           >
-            <Form
-              noValidate
-              validated={validated}
-              id={formId}
-              name="contactForm"
-              onSubmit={handleSubmit}
-            >
-              <Form.Group className="mb-3" controlId="contactForm.nameInput">
-                <Form.Control
-                  isInvalid={!!errors.name}
-                  type="text"
-                  placeholder={texts.contactModal.namePlaceholder}
-                  autoFocus
-                  name="name"
-                  required
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.name}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="contactForm.phoneInput">
-                <PatternFormat
-                  format="+38(0##) ###-##-##"
-                  mask="_"
-                  isnumericstring="true"
-                  required
-                  name="phone"
-                  customInput={(props) => {
-                    return (
-                      <Form.Group
-                        controlId="contactForm.phone"
-                        className="mb-3"
-                      >
-                        <Form.Control
-                          isInvalid={!!errors.phone}
-                          placeholder="+38(0__) ___-__-__"
-                          {...props}
-                        />
-                      </Form.Group>
-                    );
-                  }}
-                />
-                <Form.Control.Feedback
-                  type="invalid"
-                  style={{ display: "block" }}
-                >
-                  {errors.phone}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="contactForm.messageInput">
-                <Form.Control
-                  isInvalid={!!errors.message}
-                  rows={3}
-                  name="message"
-                  placeholder={texts.contactModal.messagePlaceholder}
-                  maxLength={500}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.message}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <div
-                className={styles.turnstileContainer}
-                ref={turnstileRef}
-              ></div>
-              {errors.captcha && (
-                <Form.Control.Feedback
-                  type="invalid"
-                  style={{ display: "block" }}
-                >
-                  {errors.captcha}
-                </Form.Control.Feedback>
-              )}
-              {message && <Alert variant="danger">{message}</Alert>}
-            </Form>
-          </fieldset>
-        </div>
-      )}
+            <Spinner animation="border" />
+          </div>
+        )}
+        <fieldset
+          disabled={sendContactStatus.isLoading}
+          style={{ border: "none", padding: 0 }}
+        >
+          <Form
+            noValidate
+            validated={validated}
+            id={formId}
+            name="contactForm"
+            onSubmit={handleSubmit}
+          >
+            <Form.Group className="mb-3" controlId="contactForm.nameInput">
+              <Form.Control
+                isInvalid={!!errors.name}
+                type="text"
+                placeholder={texts.contactModal.namePlaceholder}
+                autoFocus
+                name="name"
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="contactForm.phoneInput">
+              <PatternFormat
+                format="+38(0##) ###-##-##"
+                mask="_"
+                isnumericstring="true"
+                required
+                name="phone"
+                customInput={(props) => {
+                  return (
+                    <Form.Group
+                      controlId="contactForm.phone"
+                      className="mb-3"
+                    >
+                      <Form.Control
+                        isInvalid={!!errors.phone}
+                        placeholder="+38(0__) ___-__-__"
+                        {...props}
+                      />
+                    </Form.Group>
+                  );
+                }}
+              />
+              <Form.Control.Feedback
+                type="invalid"
+                style={{ display: "block" }}
+              >
+                {errors.phone}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="contactForm.messageInput">
+              <Form.Control
+                isInvalid={!!errors.message}
+                rows={3}
+                name="message"
+                placeholder={texts.contactModal.messagePlaceholder}
+                maxLength={500}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <div
+              className={styles.turnstileContainer}
+              ref={turnstileRef}
+            ></div>
+            {errors.captcha && (
+              <Form.Control.Feedback
+                type="invalid"
+                style={{ display: "block" }}
+              >
+                {errors.captcha}
+              </Form.Control.Feedback>
+            )}
+            {message && <Alert variant="danger">{message}</Alert>}
+          </Form>
+        </fieldset>
+      </div>
     </>
   );
 }

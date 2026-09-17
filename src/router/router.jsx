@@ -6,13 +6,7 @@ import { getCompanyData } from "../api/companyApi";
 import MainLayout from "../layouts/MainLayout";
 
 async function rootLoader() {
-  const res = await getCompanyData();
-
-  if (!res.ok) {
-    throw new Error("Failed to load data");
-  }
-
-  return res.json();
+  return await getCompanyData();
 }
 
 // lazy loading страниц

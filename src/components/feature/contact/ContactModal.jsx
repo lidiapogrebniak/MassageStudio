@@ -12,7 +12,7 @@ function useSendContactStatus() {
       isIdle: state === "idle",
       isLoading: state === "loading",
       isSuccess: state === "success",
-      isVaidationError: state === "validationError",
+      isValidationError: state === "validationError",
       isError: state === "error",
       isResolved: state === "success" || state === "error",
       error,
@@ -39,7 +39,7 @@ function useSendContactStatus() {
         setState("idle")
       },
     }),
-    [state, error],
+    [state, error]
   )
 }
 

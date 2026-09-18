@@ -1,20 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
-import { lazy } from "react";
 import { getFeaturedServices, getServices } from "../api/servicesApi";
 import { getCompanyData } from "../api/companyApi";
 
 import MainLayout from "../layouts/MainLayout";
+import { Home, About, Contacts, NotFound, Services } from "./lazyPages";
 
 async function rootLoader() {
   return await getCompanyData();
 }
-
-// lazy loading страниц
-const Home = lazy(() => import("../pages/home/Home"));
-const About = lazy(() => import("../pages/about/About"));
-const Contacts = lazy(() => import("../pages/contacts/Contacts"));
-const NotFound = lazy(() => import("../pages/NotFound"));
-const Services = lazy(() => import("../pages/services/Services"));
 
 const router = createBrowserRouter([
   {
@@ -26,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        Component: Home,
         loader: async () => {
           return {
             featuredServices: await getFeaturedServices(),
@@ -36,17 +29,17 @@ const router = createBrowserRouter([
 
       {
         path: "about",
-        element: <About />,
+        Component: About,
       },
 
       {
         path: "contacts",
-        element: <Contacts />,
+        Component: Contacts,
       },
 
       {
         path: "services",
-        element: <Services />,
+        Component: Services,
         loader: async () => {
           return {
             services: await getServices(),
@@ -56,7 +49,7 @@ const router = createBrowserRouter([
 
       {
         path: "*",
-        element: <NotFound />,
+        Component: NotFound,
       },
     ],
   },

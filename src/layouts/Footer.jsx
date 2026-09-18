@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './Footer.module.css';
 import { texts } from '../data/texts.uk';
 import { FaClock, FaPhoneAlt } from 'react-icons/fa';

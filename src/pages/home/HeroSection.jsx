@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './HeroSection.module.css';
 import { texts } from '../../data/texts.uk';
 import { Carousel } from 'react-bootstrap';

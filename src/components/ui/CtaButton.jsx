@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './CtaButton.module.css';
 import { texts as t } from '../../data/texts.uk';
 import {Button} from 'react-bootstrap';

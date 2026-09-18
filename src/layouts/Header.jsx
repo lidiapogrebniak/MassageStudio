@@ -1,4 +1,3 @@
-import React from 'react'
 import { FaPhoneAlt, FaTelegramPlane, FaViber, FaInstagram } from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
 import {Link} from "react-router-dom";

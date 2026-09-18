@@ -1,66 +1,69 @@
-import { forwardRef, useRef, useImperativeHandle, useState } from "react";
-import Modal from "../../ui/Modal";
-import ContactForm from "./ContactForm";
-import { texts } from "../../../data/texts.uk";
+import { forwardRef, useRef, useImperativeHandle, useMemo, useState } from "react"
+import Modal from "../../ui/Modal"
+import ContactForm from "./ContactForm"
+import { texts } from "../../../data/texts.uk"
 
 function useSendContactStatus() {
-  const [state, setState] = useState("idle");
-  const [error, setError] = useState(null);
+  const [state, setState] = useState("idle")
+  const [error, setError] = useState(null)
 
-  return {
-    isIdle: state === "idle",
-    isLoading: state === "loading",
-    isSuccess: state === "success",
-    isVaidationError: state === "validationError",
-    isError: state === "error",
-    isResolved: state === "success" || state === "error",
-    error,
+  return useMemo(
+    () => ({
+      isIdle: state === "idle",
+      isLoading: state === "loading",
+      isSuccess: state === "success",
+      isVaidationError: state === "validationError",
+      isError: state === "error",
+      isResolved: state === "success" || state === "error",
+      error,
 
-    startLoading: () => {
-      setError(null);
-      setState("loading");
-    },
+      startLoading: () => {
+        setError(null)
+        setState("loading")
+      },
 
-    setValidationError: () => {
-      setError(null);
-      setState("validationError");
-    },
+      setValidationError: () => {
+        setError(null)
+        setState("validationError")
+      },
 
-    resolveSuccess: () => setState("success"),
+      resolveSuccess: () => setState("success"),
 
-    resolveError: (err) => {
-      setError(err);
-      setState("error");
-    },
+      resolveError: (err) => {
+        setError(err)
+        setState("error")
+      },
 
-    reset: () => {
-      setError(null);
-      setState("idle");
-    },
-  };
+      reset: () => {
+        setError(null)
+        setState("idle")
+      },
+    }),
+    [state, error],
+  )
 }
 
 const ContactModal = forwardRef((props, ref) => {
-  const modalRef = useRef(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const contactFormId = "contactForm";
+  const modalRef = useRef(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const contactFormId = "contactForm"
 
-  const sendContactStatus = useSendContactStatus();
+  const sendContactStatus = useSendContactStatus()
 
   useImperativeHandle(ref, () => {
     return {
       open: () => {
-        sendContactStatus.reset();
-        setIsModalOpen(true);
-        modalRef.current?.open();
+        sendContactStatus.reset()
+        setIsModalOpen(true)
+        modalRef.current?.open()
       },
       close: () => {
-        sendContactStatus.reset();
-        setIsModalOpen(false);
-        modalRef.current?.close();
+        sendContactStatus.reset()
+        setIsModalOpen(false)
+        modalRef.current?.close()
       },
-    };
-  }, []);
+    }
+  }, [sendContactStatus])
 
   return (
     <Modal
@@ -73,12 +76,9 @@ const ContactModal = forwardRef((props, ref) => {
       submitFormId={contactFormId}
       requestStatus={sendContactStatus}
     >
-      <ContactForm
-        formId={contactFormId}
-        sendContactStatus={sendContactStatus}
-      />
+      <ContactForm formId={contactFormId} sendContactStatus={sendContactStatus} />
     </Modal>
-  );
-});
+  )
+})
 
-export default ContactModal;
+export default ContactModal

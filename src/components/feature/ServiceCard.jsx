@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './ServiceCard.module.css';
 import { texts } from '../../data/texts.uk';
 import CtaButton from '../ui/CtaButton';

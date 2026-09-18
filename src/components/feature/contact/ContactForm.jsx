@@ -59,7 +59,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
         widgetIdRef.current = null;
       }
     };
-  }, []);
+  }, [turnstleSiteKey]);
 
   async function handleSubmit(e) {
     e.preventDefault();

@@ -1,5 +1,4 @@
 import React from 'react'
-import { useState } from 'react';
 import HeroSection from './HeroSection';
 import ServicesSection from './ServicesSection';
 import { useLoaderData } from 'react-router-dom';

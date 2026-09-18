@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './About.module.css';
 import { texts } from '../../data/texts.uk';
 

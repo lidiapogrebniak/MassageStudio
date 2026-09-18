@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './ServicesSection.module.css';
 import { texts } from '../../data/texts.uk';
 import {Link} from "react-router-dom";

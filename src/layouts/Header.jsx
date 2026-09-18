@@ -5,11 +5,12 @@ import {Nav, Navbar, Container} from "react-bootstrap"
 import styles from './Header.module.css';
 import { texts } from '../data/texts.uk';
 import { buildProfileLink } from '../utils/socialHelper';
+import { getPhoneDigits } from '../utils/phoneHelper';
 import { useState } from 'react';
 
 const Header = (props) => {
     const { contacts } = props;
-    const telephoneShort = contacts.phone && contacts.phone.replace(/\D/g, '');
+    const telephoneShort = getPhoneDigits(contacts.phone);
 
     const [expanded, setExpanded] = useState(false);
 

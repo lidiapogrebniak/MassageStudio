@@ -3,11 +3,12 @@ import { texts } from '../data/texts.uk';
 import { FaClock, FaPhoneAlt } from 'react-icons/fa';
 import { FaLocationDot, FaEnvelope } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import { getPhoneDigits } from '../utils/phoneHelper';
 
 
 const Footer = (props) => {
   const { contacts } = props;
-  const telephoneShort = contacts.phone && contacts.phone.replace(/\D/g, '');
+  const telephoneShort = getPhoneDigits(contacts.phone);
 
   return (
     <footer

@@ -2,11 +2,12 @@ import styles from "./Contacts.module.css"
 import { texts } from "../../data/texts.uk"
 import { useRouteLoaderData } from "react-router-dom"
 import { buildProfileLink } from "../../utils/socialHelper"
+import { getPhoneDigits } from "../../utils/phoneHelper"
 
 const Contacts = () => {
   const companyData = useRouteLoaderData("root")
   const contacts = companyData ? companyData.contacts : {}
-  const telephoneShort = contacts.phone && contacts.phone.replace(/\D/g, "")
+  const telephoneShort = getPhoneDigits(contacts.phone)
 
   return (
     <section className="section">

@@ -6,6 +6,7 @@ import { Alert, Spinner, Form } from "react-bootstrap";
 import { PatternFormat } from "react-number-format";
 import { contactSchema } from "../../../api/contact/contactScheme.js";
 import { contactErrorMessages } from "../../../data/contact.error.messages.js";
+import { getPhoneDigits } from "../../../utils/phoneHelper.js";
 import styles from "./ContactForm.module.css";
 
 export default function ContactForm({ formId, sendContactStatus }) {
@@ -69,7 +70,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
     const formData = new FormData(e.target);
     const data = {
       name: formData.get("name"),
-      phone: formData.get("phone").replace(/\D/g, ""),
+      phone: getPhoneDigits(formData.get("phone")),
       message: formData.get("message"),
       captchaToken: token,
     };

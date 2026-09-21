@@ -1,4 +1,4 @@
-import { validateContact } from "./validate.js";
+import { validateContact } from "./serverValidateContact.js";
 import { verifyTurnstile } from "./verifyTurnstile.js";
 import { checkCooldown, startCooldown } from "./contactCooldown.js";
 import { ApiServerError } from "../apiErrors.js";

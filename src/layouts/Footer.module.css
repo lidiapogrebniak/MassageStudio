@@ -1,40 +1,39 @@
-
 .footer {
-   padding-top: 5rem;
-   padding-bottom: 3rem;
+  padding-top: 5rem;
+  padding-bottom: 3rem;
 }
 .brandLogo > img {
-   height: 50px;
-   margin-bottom: 1.5rem;
+  height: 50px;
+  margin-bottom: 1.5rem;
 }
 .aboutText {
-   line-height: 1.7;
-   margin-bottom: 1.5rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
 }
 
 .footer h3 {
-    color: #2c2c2c;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 0.875rem;
+  color: #2c2c2c;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.875rem;
 }
 a.footerLink {
-    color: #5a5a5a !important;
-    transition: color 0.3s ease;
+  color: #5a5a5a !important;
+  transition: color 0.3s ease;
 }
 a.footerLink:hover {
-    color: #d4a574 !important;
+  color: #d4a574 !important;
 }
 .footer svg {
-    margin-right: 0.75rem;
+  margin-right: 0.75rem;
 }
 
 .footer .schedule {
-    align-items: center !important;
-    color: #5a5a5a;
+  align-items: center !important;
+  color: #5a5a5a;
 }
 
 .footer .schedule .scheduleText {
-    text-align: left;
+  text-align: left;
 }

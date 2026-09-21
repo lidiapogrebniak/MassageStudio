@@ -1,13 +1,13 @@
-import styles from "./Contacts.module.css"
-import { texts } from "../../data/texts.uk"
-import { useRouteLoaderData } from "react-router-dom"
-import { buildProfileLink } from "../../utils/socialHelper"
-import { getPhoneDigits } from "../../utils/phoneHelper"
+import styles from "./Contacts.module.css";
+import { texts } from "../../data/texts.uk";
+import { useRouteLoaderData } from "react-router-dom";
+import { buildProfileLink } from "../../utils/socialHelper";
+import { getPhoneDigits } from "../../utils/phoneHelper";
 
 const Contacts = () => {
-  const companyData = useRouteLoaderData("root")
-  const contacts = companyData ? companyData.contacts : {}
-  const telephoneShort = getPhoneDigits(contacts.phone)
+  const companyData = useRouteLoaderData("root");
+  const contacts = companyData ? companyData.contacts : {};
+  const telephoneShort = getPhoneDigits(contacts.phone);
 
   return (
     <section className="section">
@@ -61,7 +61,10 @@ const Contacts = () => {
                     <strong>{texts.contactsPage.telegram}:</strong>
                     <br />
                     <a
-                      href={buildProfileLink("telegram", contacts.telegramUsername)}
+                      href={buildProfileLink(
+                        "telegram",
+                        contacts.telegramUsername,
+                      )}
                       target="_blank"
                       rel="noreferrer noopener"
                     >
@@ -76,7 +79,10 @@ const Contacts = () => {
                     <strong>{texts.contactsPage.instagram}:</strong>
                     <br />
                     <a
-                      href={buildProfileLink("instagram", contacts.instagramUsername)}
+                      href={buildProfileLink(
+                        "instagram",
+                        contacts.instagramUsername,
+                      )}
                       target="_blank"
                       rel="noreferrer noopener"
                     >
@@ -105,7 +111,7 @@ const Contacts = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Contacts
+export default Contacts;

@@ -119,10 +119,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
       if (res.status === 429) {
         setMessage(
-          texts.contactModal.duplicateMessage.replace(
-            "{#phone}",
-            companyPhone,
-          ),
+          texts.contactModal.duplicateMessage.replace("{#phone}", companyPhone),
         );
         sendContactStatus.resolveSuccess();
         e.target.reset();
@@ -204,10 +201,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
                 name="phone"
                 customInput={(props) => {
                   return (
-                    <Form.Group
-                      controlId="contactForm.phone"
-                      className="mb-3"
-                    >
+                    <Form.Group controlId="contactForm.phone" className="mb-3">
                       <Form.Control
                         isInvalid={!!errors.phone}
                         placeholder="+38(0__) ___-__-__"
@@ -236,10 +230,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
                 {errors.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <div
-              className={styles.turnstileContainer}
-              ref={turnstileRef}
-            ></div>
+            <div className={styles.turnstileContainer} ref={turnstileRef}></div>
             {errors.captcha && (
               <Form.Control.Feedback
                 type="invalid"

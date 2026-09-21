@@ -14,7 +14,7 @@ function MainLayout() {
         <Outlet />
       </Suspense>
 
-      <Footer contacts={companyData.contacts}/>
+      <Footer contacts={companyData.contacts} />
     </>
   );
 }

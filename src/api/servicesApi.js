@@ -26,5 +26,5 @@ export async function getFeaturedServices() {
 export async function getServiceById(id) {
   const services = await getServices();
 
-  return services.find(s => s.id === id);
+  return services.find((s) => s.id === id);
 }

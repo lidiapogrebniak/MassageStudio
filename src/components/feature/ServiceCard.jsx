@@ -1,6 +1,6 @@
-import styles from "./ServiceCard.module.css"
-import { texts } from "../../data/texts.uk"
-import CtaButton from "../ui/CtaButton"
+import styles from "./ServiceCard.module.css";
+import { texts } from "../../data/texts.uk";
+import CtaButton from "../ui/CtaButton";
 
 const ServiceCard = ({ service, lazy, onCtaButtonClick }) => {
   return (
@@ -17,7 +17,9 @@ const ServiceCard = ({ service, lazy, onCtaButtonClick }) => {
           <div
             className={`${styles.cardFooter} d-flex justify-content-between align-items-center mb-3 mt-auto`}
           >
-            <span className={`${styles.duration} text-muted`}>{service.duration}</span>
+            <span className={`${styles.duration} text-muted`}>
+              {service.duration}
+            </span>
             <span className={styles.price}>{service.price}</span>
           </div>
           <CtaButton
@@ -28,7 +30,7 @@ const ServiceCard = ({ service, lazy, onCtaButtonClick }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ServiceCard
+export default ServiceCard;

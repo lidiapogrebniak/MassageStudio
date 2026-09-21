@@ -1,19 +1,19 @@
-import express from "express"
-import { handleContact } from "../src/api/contact/contactService.js"
+import express from "express";
+import { handleContact } from "../src/api/contact/contactService.js";
 import {
   ApiServerError,
   ApiValidationError,
   ApiRateLimitError,
-} from "../src/api/apiErrors.js"
-import { loadEnvFile } from 'node:process';
+} from "../src/api/apiErrors.js";
+import { loadEnvFile } from "node:process";
 
 loadEnvFile();
 
-const app = express()
-app.use(express.json())
+const app = express();
+app.use(express.json());
 
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok" })
+  res.json({ status: "ok" });
 });
 
 app.post("/api/contact", async (req, res) => {
@@ -23,26 +23,25 @@ app.post("/api/contact", async (req, res) => {
       FORMINIT_API_KEY: process.env.FORMINIT_API_KEY,
       TURNSTILE_SECRET: process.env.TURNSTILE_SECRET,
       SKIP_EMAIL: process.env.SKIP_EMAIL !== "false",
-    })
+    });
 
-    res.json(result)
-
+    res.json(result);
   } catch (error) {
     if (error instanceof ApiValidationError) {
-      res.status(error.status).json({ fieldErrors: error.fieldErrors })
-      return
+      res.status(error.status).json({ fieldErrors: error.fieldErrors });
+      return;
     }
 
     if (error instanceof ApiServerError || error instanceof ApiRateLimitError) {
-      res.status(error.status).json({ error: error.message })
-      return
+      res.status(error.status).json({ error: error.message });
+      return;
     }
 
-    console.error("Contact request failed:", error)
-    res.status(500).json({ error: "Internal server error" })
+    console.error("Contact request failed:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-})
+});
 
 app.listen(3001, () => {
-  console.log("Dev API running on http://localhost:3001")
-})
+  console.log("Dev API running on http://localhost:3001");
+});

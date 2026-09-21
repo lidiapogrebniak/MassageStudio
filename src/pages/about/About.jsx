@@ -1,5 +1,5 @@
-import styles from './About.module.css';
-import { texts } from '../../data/texts.uk';
+import styles from "./About.module.css";
+import { texts } from "../../data/texts.uk";
 
 const About = () => {
   return (
@@ -10,7 +10,7 @@ const About = () => {
 
           <div className={styles.aboutBlock}>
             <div className={styles.aboutImage}>
-              <img src="../images/about_me.jpg" alt="Массажист Анна"/>
+              <img src="../images/about_me.jpg" alt="Массажист Анна" />
             </div>
             <div className={styles.aboutText}>
               <p>{texts.aboutMePage.intro}</p>
@@ -27,7 +27,7 @@ const About = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default About
+export default About;

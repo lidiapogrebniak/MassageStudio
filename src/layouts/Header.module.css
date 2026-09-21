@@ -1,55 +1,55 @@
-  :root {
-    --nav-links-color: #var(--link-color);
-    --nav-links-hover-color: var(--primary-color);
-    --nav-links-hover-bg: #f5f0eb;
-  }
+:root {
+  --nav-links-color: #var(--link-color);
+  --nav-links-hover-color: var(--primary-color);
+  --nav-links-hover-bg: #f5f0eb;
+}
 
-  :global(.navbar-brand img) {
-    height: 60px;
-  }
+:global(.navbar-brand img) {
+  height: 60px;
+}
 
-  :global(.navbar-brand) {
-    outline: none;
-  }
+:global(.navbar-brand) {
+  outline: none;
+}
 
-  :global(.navbar){
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important
-  }
+:global(.navbar) {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
 
-  :global(.navbar-nav){
-    flex-grow: 1;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-  }
+:global(.navbar-nav) {
+  flex-grow: 1;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
 
-  :global(.navbar-collapse) {
-    gap: 3rem;
-  }
+:global(.navbar-collapse) {
+  gap: 3rem;
+}
 
-  :global(.nav-link) {
-    color: var(--nav-links-color) !important;
-  }
+:global(.nav-link) {
+  color: var(--nav-links-color) !important;
+}
 
-  :global(.nav-link:hover) {
-    color: var(--nav-links-hover-color) !important;
-  }
+:global(.nav-link:hover) {
+  color: var(--nav-links-hover-color) !important;
+}
 
- .contactInfoSeparator {
-    padding-top: 8px;
-    border-top: rgba(75, 75, 75, 0.5) 1px solid;
-  }
+.contactInfoSeparator {
+  padding-top: 8px;
+  border-top: rgba(75, 75, 75, 0.5) 1px solid;
+}
 
-  .socialIconLink {
-    width: 36px;
-    height: 36px;
-    background-color: #f5f0eb;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-  }
+.socialIconLink {
+  width: 36px;
+  height: 36px;
+  background-color: #f5f0eb;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
 
-  .socialIconLink:hover {
-    background-color: #e8e0d8;
-  }
+.socialIconLink:hover {
+  background-color: #e8e0d8;
+}

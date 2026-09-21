@@ -1,19 +1,16 @@
-import styles from './Footer.module.css';
-import { texts } from '../data/texts.uk';
-import { FaClock, FaPhoneAlt } from 'react-icons/fa';
-import { FaLocationDot, FaEnvelope } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
-import { getPhoneDigits } from '../utils/phoneHelper';
-
+import styles from "./Footer.module.css";
+import { texts } from "../data/texts.uk";
+import { FaClock, FaPhoneAlt } from "react-icons/fa";
+import { FaLocationDot, FaEnvelope } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { getPhoneDigits } from "../utils/phoneHelper";
 
 const Footer = (props) => {
   const { contacts } = props;
   const telephoneShort = getPhoneDigits(contacts.phone);
 
   return (
-    <footer
-      className={`${styles.footer} bg-light text-center border-top`}
-    >
+    <footer className={`${styles.footer} bg-light text-center border-top`}>
       <div className="container">
         <div className="row g-4 pb-4 mb-4 border-bottom">
           <div className="col-12 col-lg-5">
@@ -28,65 +25,62 @@ const Footer = (props) => {
           {/* Schedule Column */}
           <div className="col-12 col-sm-6 col-lg-3">
             <div className="d-flex flex-column align-items-center">
-                <h3 className="h6 mb-3">
-                {texts.footer.schedule}
-                </h3>
-                <ul className="list-unstyled">
+              <h3 className="h6 mb-3">{texts.footer.schedule}</h3>
+              <ul className="list-unstyled">
                 <li className="mb-2">
-                    <div
-                      className={`d-flex align-items-start ${styles.schedule}`}>
-                        <FaClock size={18} />
+                  <div
+                    className={`d-flex align-items-start ${styles.schedule}`}
+                  >
+                    <FaClock size={18} />
                     <div className={styles.scheduleText}>
-                        {contacts.scheduleDetails && (
-                            <>
-                            <div>{contacts.scheduleDetails.workdays}</div>
-                            <div>{contacts.scheduleDetails.weekends}</div>
-                            </>
-                        )}
+                      {contacts.scheduleDetails && (
+                        <>
+                          <div>{contacts.scheduleDetails.workdays}</div>
+                          <div>{contacts.scheduleDetails.weekends}</div>
+                        </>
+                      )}
                     </div>
-                    </div>
+                  </div>
                 </li>
-                </ul>
+              </ul>
             </div>
           </div>
 
           {/* Contacts Column */}
           <div className="col-12 col-sm-6 col-lg-4">
             <div className="d-flex flex-column align-items-center">
-                <h3 className="h6 mb-3">
-                {texts.footer.contacts}
-                </h3>
-                <ul className="list-unstyled">
+              <h3 className="h6 mb-3">{texts.footer.contacts}</h3>
+              <ul className="list-unstyled">
                 <li className="mb-3">
-                    <a
+                  <a
                     href={`tel:${telephoneShort}`}
                     className={`${styles.footerLink} d-flex align-items-center text-decoration-none`}
-                    >
-                        <FaPhoneAlt size={18} />
-                        <span>{contacts.phone}</span>
-                    </a>
+                  >
+                    <FaPhoneAlt size={18} />
+                    <span>{contacts.phone}</span>
+                  </a>
                 </li>
                 <li className="mb-3">
-                    <a
+                  <a
                     href={`mailto:${contacts.mail}`}
                     className={`${styles.footerLink} d-flex align-items-center text-decoration-none`}
-                    >
-                    <FaEnvelope size={16}/>
+                  >
+                    <FaEnvelope size={16} />
                     <span>{contacts.mail}</span>
-                    </a>
+                  </a>
                 </li>
                 <li className="mb-3">
-                    <a
+                  <a
                     href={contacts.googleMapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`${styles.footerLink} d-flex align-items-center text-decoration-none`}
-                    >
+                  >
                     <FaLocationDot size={16} />
                     <span>{contacts.address}</span>
-                    </a>
+                  </a>
                 </li>
-                </ul>
+              </ul>
             </div>
           </div>
         </div>
@@ -99,7 +93,7 @@ const Footer = (props) => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

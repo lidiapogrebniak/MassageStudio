@@ -1,7 +1,9 @@
 export class ApiError extends Error {
   constructor(message, status) {
     if (new.target === ApiError) {
-      throw new TypeError("ApiError is abstract and cannot be instantiated directly");
+      throw new TypeError(
+        "ApiError is abstract and cannot be instantiated directly",
+      );
     }
     super(message);
     this.name = new.target.name;

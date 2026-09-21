@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "node server/server.js",
-    "predev:full": "npm run lint",
+    "predev:full": "npm run lint && npm run format:check",
     "dev:full": "concurrently \"npm run server\" \"npm run dev\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

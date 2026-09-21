@@ -2,7 +2,6 @@ import { contactSchema } from "./contactScheme.js";
 import { ApiValidationError } from "../apiErrors.js";
 
 export function validateContact(data) {
-
   const result = contactSchema.safeParse(data);
 
   if (!result.success) {

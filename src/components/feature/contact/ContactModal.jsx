@@ -1,11 +1,17 @@
-import { forwardRef, useRef, useImperativeHandle, useMemo, useState } from "react"
-import Modal from "../../ui/Modal"
-import ContactForm from "./ContactForm"
-import { texts } from "../../../data/texts.uk"
+import {
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from "react";
+import Modal from "../../ui/Modal";
+import ContactForm from "./ContactForm";
+import { texts } from "../../../data/texts.uk";
 
 function useSendContactStatus() {
-  const [state, setState] = useState("idle")
-  const [error, setError] = useState(null)
+  const [state, setState] = useState("idle");
+  const [error, setError] = useState(null);
 
   return useMemo(
     () => ({
@@ -18,52 +24,52 @@ function useSendContactStatus() {
       error,
 
       startLoading: () => {
-        setError(null)
-        setState("loading")
+        setError(null);
+        setState("loading");
       },
 
       setValidationError: () => {
-        setError(null)
-        setState("validationError")
+        setError(null);
+        setState("validationError");
       },
 
       resolveSuccess: () => setState("success"),
 
       resolveError: (err) => {
-        setError(err)
-        setState("error")
+        setError(err);
+        setState("error");
       },
 
       reset: () => {
-        setError(null)
-        setState("idle")
+        setError(null);
+        setState("idle");
       },
     }),
-    [state, error]
-  )
+    [state, error],
+  );
 }
 
 const ContactModal = forwardRef((props, ref) => {
-  const modalRef = useRef(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const contactFormId = "contactForm"
+  const modalRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const contactFormId = "contactForm";
 
-  const sendContactStatus = useSendContactStatus()
+  const sendContactStatus = useSendContactStatus();
 
   useImperativeHandle(ref, () => {
     return {
       open: () => {
-        sendContactStatus.reset()
-        setIsModalOpen(true)
-        modalRef.current?.open()
+        sendContactStatus.reset();
+        setIsModalOpen(true);
+        modalRef.current?.open();
       },
       close: () => {
-        sendContactStatus.reset()
-        setIsModalOpen(false)
-        modalRef.current?.close()
+        sendContactStatus.reset();
+        setIsModalOpen(false);
+        modalRef.current?.close();
       },
-    }
-  }, [sendContactStatus])
+    };
+  }, [sendContactStatus]);
 
   return (
     <Modal
@@ -76,9 +82,12 @@ const ContactModal = forwardRef((props, ref) => {
       submitFormId={contactFormId}
       requestStatus={sendContactStatus}
     >
-      <ContactForm formId={contactFormId} sendContactStatus={sendContactStatus} />
+      <ContactForm
+        formId={contactFormId}
+        sendContactStatus={sendContactStatus}
+      />
     </Modal>
-  )
-})
+  );
+});
 
-export default ContactModal
+export default ContactModal;

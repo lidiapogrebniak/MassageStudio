@@ -8,6 +8,15 @@ import {
 export async function onRequestPost(context) {
   const { request, env } = context;
 
+  // Без KV cooldown молча отключается, поэтому в production это ошибка конфигурации
+  if (!env.CONTACT_COOLDOWN_KV) {
+    console.error("CONTACT_COOLDOWN_KV binding is missing");
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   try {
     const data = await request.json();
 
@@ -15,7 +24,6 @@ export async function onRequestPost(context) {
       FORMINIT_URL: env.FORMINIT_URL,
       FORMINIT_API_KEY: env.FORMINIT_API_KEY,
       TURNSTILE_SECRET: env.TURNSTILE_SECRET,
-      IS_PRODUCTION: env.IS_PRODUCTION === "true",
       CONTACT_COOLDOWN_KV: env.CONTACT_COOLDOWN_KV,
     });
 

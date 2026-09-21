@@ -22,7 +22,7 @@ app.post("/api/contact", async (req, res) => {
       FORMINIT_URL: process.env.FORMINIT_URL,
       FORMINIT_API_KEY: process.env.FORMINIT_API_KEY,
       TURNSTILE_SECRET: process.env.TURNSTILE_SECRET,
-      IS_PRODUCTION: process.env.IS_PRODUCTION === "true",
+      SKIP_EMAIL: process.env.SKIP_EMAIL !== "false",
     })
 
     res.json(result)

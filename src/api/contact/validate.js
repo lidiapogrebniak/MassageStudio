@@ -13,5 +13,5 @@ export function validateContact(data) {
     throw new ApiValidationError(fieldErrors);
   }
 
-  return true
+  return result.data;
 }

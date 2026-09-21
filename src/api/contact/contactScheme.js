@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { ContactErrorCodes } from "./contactErrorCodes.js";
-import { normalizePhoneE164 } from "./phone.js";
+import { normalizePhoneE164 } from "./phoneNormalization.js";
 
 export const contactSchema = z.object({
   name: z
@@ -27,10 +27,17 @@ export const contactSchema = z.object({
     })
     .trim()
     .min(1, ContactErrorCodes.PHONE_REQUIRED)
-    .refine(
-      (value) => value === "" || !!normalizePhoneE164(value),
-      ContactErrorCodes.PHONE_INVALID,
-    ),
+    .transform((value, ctx) => {
+      if (value === "") return value;
+
+      const normalized = normalizePhoneE164(value);
+      if (!normalized) {
+        ctx.addIssue(ContactErrorCodes.PHONE_INVALID);
+        return z.NEVER;
+      }
+
+      return normalized;
+    }),
 
   message: z.string().max(500, ContactErrorCodes.MESSAGE_TOO_LONG).optional(),
 });

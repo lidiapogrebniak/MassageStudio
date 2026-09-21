@@ -1,13 +1,12 @@
 import { validateContact } from "./validate.js";
 import { verifyTurnstile } from "./verifyTurnstile.js";
 import { checkCooldown, startCooldown } from "./contactCooldown.js";
-import { normalizePhoneE164 } from "./phone.js";
 import { ApiServerError } from "../apiErrors.js";
 
 const FORMINIT_TIMEOUT_MS = 8000;
 
 export async function handleContact(formData, config) {
-  const { name, phone, message, captchaToken } = formData;
+  const { name, message, captchaToken } = formData;
 
   const {
     FORMINIT_URL,
@@ -18,7 +17,7 @@ export async function handleContact(formData, config) {
   } = config;
 
   // 1. Валидация
-  validateContact({ name, phone, message });
+  const { phone } = validateContact({ name, phone: formData.phone, message });
 
   // 2. Проверка капчи
   await verifyTurnstile(captchaToken, TURNSTILE_SECRET);
@@ -41,7 +40,7 @@ export async function handleContact(formData, config) {
               type: "sender",
               properties: {
                 fullName: name,
-                phone: normalizePhoneE164(phone) ?? phone,
+                phone,
               },
             },
             {

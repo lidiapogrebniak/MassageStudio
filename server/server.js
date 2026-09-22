@@ -12,10 +12,6 @@ loadEnvFile();
 const app = express();
 app.use(express.json());
 
-app.get("/api/health", (req, res) => {
-  res.json({ status: "ok" });
-});
-
 app.post("/api/contact", async (req, res) => {
   try {
     const result = await handleContact(req.body, {

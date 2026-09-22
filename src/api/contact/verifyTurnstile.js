@@ -1,5 +1,5 @@
 import { ContactErrorCodes } from "./contactErrorCodes.js";
-import { ApiValidationError, ApiServerError } from "../apiErrors.js";
+import { ApiValidationError, ApiExternalServiceError } from "../apiErrors.js";
 
 const TURNSTILE_TIMEOUT_MS = 8000;
 
@@ -27,12 +27,25 @@ export async function verifyTurnstile(token, secret) {
     );
   } catch (error) {
     if (error.name === "TimeoutError") {
-      throw new ApiServerError("Captcha verification timed out", 504);
+      throw new ApiExternalServiceError("Captcha verification timed out", 504);
     }
     throw error;
   }
 
-  const data = await response.json();
+  if (!response.ok) {
+    throw new ApiExternalServiceError(
+      "Captcha verification service unavailable",
+    );
+  }
+
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    throw new ApiExternalServiceError(
+      "Captcha verification service unavailable",
+    );
+  }
 
   if (!data.success) {
     throwCaptchaError(ContactErrorCodes.INVALID_CAPTCHA);

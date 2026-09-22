@@ -1,7 +1,7 @@
 import { validateContact } from "./serverValidateContact.js";
 import { verifyTurnstile } from "./verifyTurnstile.js";
 import { checkCooldown, startCooldown } from "./contactCooldown.js";
-import { ApiServerError } from "../apiErrors.js";
+import { ApiExternalServiceError } from "../apiErrors.js";
 
 const FORMINIT_TIMEOUT_MS = 8000;
 
@@ -63,7 +63,7 @@ export async function handleContact(formData, config) {
     });
   } catch (error) {
     if (error.name === "TimeoutError") {
-      throw new ApiServerError("Email service timed out", 504);
+      throw new ApiExternalServiceError("Email service timed out", 504);
     }
     throw error;
   }
@@ -71,7 +71,7 @@ export async function handleContact(formData, config) {
   if (!response.ok) {
     const errorText = await response.text();
     console.error("ForminIt error response:", errorText); // Log the error response
-    throw new ApiServerError("Email service error");
+    throw new ApiExternalServiceError("Email service error");
   }
 
   await startCooldown(CONTACT_COOLDOWN_KV, phone);

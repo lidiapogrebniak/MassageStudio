@@ -24,6 +24,12 @@ export class ApiServerError extends ApiError {
   }
 }
 
+export class ApiExternalServiceError extends ApiServerError {
+  constructor(message, status = 502) {
+    super(message, status);
+  }
+}
+
 export class ApiRateLimitError extends ApiError {
   constructor(message = "Too many requests") {
     super(message, 429);

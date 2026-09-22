@@ -6,7 +6,7 @@ import { ApiServerError } from "../apiErrors.js";
 const FORMINIT_TIMEOUT_MS = 8000;
 
 export async function handleContact(formData, config) {
-  const { name, message, captchaToken } = formData;
+  const { name: rawName, message, captchaToken } = formData;
 
   const {
     FORMINIT_URL,
@@ -17,7 +17,7 @@ export async function handleContact(formData, config) {
   } = config;
 
   // 1. Валидация
-  const { phone } = validateContact({ name, phone: formData.phone, message });
+  const { name, phone } = validateContact({ name: rawName, phone: formData.phone, message });
 
   // 2. Проверка капчи
   await verifyTurnstile(captchaToken, TURNSTILE_SECRET);

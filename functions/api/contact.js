@@ -1,9 +1,5 @@
 import { handleContact } from "../../src/api/contact/contactService.js";
-import {
-  ApiServerError,
-  ApiValidationError,
-  ApiRateLimitError,
-} from "../../src/api/apiErrors.js";
+import { toErrorResponse } from "../../src/api/apiErrorResponse.js";
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -32,23 +28,9 @@ export async function onRequestPost(context) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    if (error instanceof ApiValidationError) {
-      return new Response(JSON.stringify({ fieldErrors: error.fieldErrors }), {
-        status: error.status,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
-    if (error instanceof ApiServerError || error instanceof ApiRateLimitError) {
-      return new Response(JSON.stringify({ error: error.message }), {
-        status: error.status,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
-    console.error("Contact request failed:", error);
-    return new Response(JSON.stringify({ error: "Internal server error" }), {
-      status: 500,
+    const { status, body } = toErrorResponse(error);
+    return new Response(JSON.stringify(body), {
+      status,
       headers: { "Content-Type": "application/json" },
     });
   }

@@ -1,10 +1,6 @@
 import express from "express";
 import { handleContact } from "../src/api/contact/contactService.js";
-import {
-  ApiServerError,
-  ApiValidationError,
-  ApiRateLimitError,
-} from "../src/api/apiErrors.js";
+import { toErrorResponse } from "../src/api/apiErrorResponse.js";
 import { loadEnvFile } from "node:process";
 
 loadEnvFile();
@@ -23,18 +19,8 @@ app.post("/api/contact", async (req, res) => {
 
     res.json(result);
   } catch (error) {
-    if (error instanceof ApiValidationError) {
-      res.status(error.status).json({ fieldErrors: error.fieldErrors });
-      return;
-    }
-
-    if (error instanceof ApiServerError || error instanceof ApiRateLimitError) {
-      res.status(error.status).json({ error: error.message });
-      return;
-    }
-
-    console.error("Contact request failed:", error);
-    res.status(500).json({ error: "Internal server error" });
+    const { status, body } = toErrorResponse(error);
+    res.status(status).json(body);
   }
 });
 

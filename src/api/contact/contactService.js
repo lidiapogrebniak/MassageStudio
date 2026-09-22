@@ -16,21 +16,25 @@ export async function handleContact(formData, config) {
     CONTACT_COOLDOWN_KV,
   } = config;
 
-  // 1. Валидация
-  const { name, phone } = validateContact({ name: rawName, phone: formData.phone, message });
+  // 1. Validation
+  const { name, phone } = validateContact({
+    name: rawName,
+    phone: formData.phone,
+    message,
+  });
 
-  // 2. Проверка капчи
+  // 2. Captcha verification
   await verifyTurnstile(captchaToken, TURNSTILE_SECRET);
 
-  // Только для локального dev-сервера: письмо и cooldown пропускаются
-  if (SKIP_EMAIL) {
+  // if SKIP_EMAIL set to 'true' email sending and cooldown are skipped
+  if (SKIP_EMAIL === "true") {
     console.info("[skip-email] contact form, email not sent", { name, phone });
     return { success: true };
   }
 
   await checkCooldown(CONTACT_COOLDOWN_KV, phone);
 
-  // 3. Отправка в ForminIt
+  // 3. Send to ForminIt
   let response;
   try {
     response = await fetch(FORMINIT_URL, {

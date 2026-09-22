@@ -4,7 +4,7 @@
   gap: 2rem;
 }
 
-/* Левая часть (картинка) */
+/* Left part (image) */
 .aboutImage {
   flex: 1;
   display: block;
@@ -15,7 +15,7 @@
   border-radius: 20px;
 }
 
-/* Правая часть (текст) */
+/* Right part (text) */
 .aboutText {
   flex: 1.2;
 }

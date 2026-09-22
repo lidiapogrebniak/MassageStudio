@@ -8,7 +8,7 @@ import {
 export async function onRequestPost(context) {
   const { request, env } = context;
 
-  // Без KV cooldown молча отключается, поэтому в production это ошибка конфигурации
+  // Without KV cooldown silently disables, so in production this is a config error
   if (!env.CONTACT_COOLDOWN_KV) {
     console.error("CONTACT_COOLDOWN_KV binding is missing");
     return new Response(JSON.stringify({ error: "Internal server error" }), {
@@ -24,6 +24,7 @@ export async function onRequestPost(context) {
       FORMINIT_URL: env.FORMINIT_URL,
       FORMINIT_API_KEY: env.FORMINIT_API_KEY,
       TURNSTILE_SECRET: env.TURNSTILE_SECRET,
+      SKIP_EMAIL: env.SKIP_EMAIL,
       CONTACT_COOLDOWN_KV: env.CONTACT_COOLDOWN_KV,
     });
 

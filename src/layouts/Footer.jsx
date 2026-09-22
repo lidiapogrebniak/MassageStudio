@@ -4,9 +4,10 @@ import { FaClock, FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot, FaEnvelope } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { getPhoneDigits } from "../utils/phoneHelper";
+import { useContacts } from "../hooks/useContacts";
 
-const Footer = (props) => {
-  const { contacts } = props;
+const Footer = () => {
+  const contacts = useContacts();
   const telephoneShort = getPhoneDigits(contacts.phone);
 
   return (

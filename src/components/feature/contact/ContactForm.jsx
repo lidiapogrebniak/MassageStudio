@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useEffect, useRef } from "react";
-import { useRouteLoaderData } from "react-router-dom";
 import { texts } from "../../../data/texts.uk";
 import { Alert, Spinner, Form } from "react-bootstrap";
 import { PatternFormat } from "react-number-format";
 import { contactSchema } from "../../../api/contact/contactScheme.js";
 import { contactErrorMessages } from "../../../data/contact.error.messages.js";
 import { getPhoneDigits } from "../../../utils/phoneHelper.js";
+import { useContacts } from "../../../hooks/useContacts.js";
 import styles from "./ContactForm.module.css";
 
 export default function ContactForm({ formId, sendContactStatus }) {
@@ -14,7 +14,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
   const [errors, setErrors] = useState({});
   const [validated, setValidated] = useState(false);
 
-  const companyPhone = useRouteLoaderData("root")?.contacts?.phone ?? "";
+  const companyPhone = useContacts().phone ?? "";
 
   const turnstleSiteKey = import.meta.env.VITE_TURNSTILE_API_KEY;
 

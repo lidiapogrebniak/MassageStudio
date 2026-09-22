@@ -1,13 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import { getFeaturedServices, getServices } from "../api/servicesApi";
-import { getCompanyData } from "../api/companyApi";
 
 import MainLayout from "../layouts/MainLayout";
 import { Home, About, Contacts, NotFound, Services } from "./lazyPages";
-
-async function rootLoader() {
-  return await getCompanyData();
-}
+import { rootLoader } from "./loaders/rootLoader";
+import { homeLoader } from "./loaders/homeLoader";
+import { servicesLoader } from "./loaders/servicesLoader";
 
 const router = createBrowserRouter([
   {
@@ -20,11 +17,7 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
-        loader: async () => {
-          return {
-            featuredServices: await getFeaturedServices(),
-          };
-        },
+        loader: homeLoader,
       },
 
       {
@@ -40,11 +33,7 @@ const router = createBrowserRouter([
       {
         path: "services",
         Component: Services,
-        loader: async () => {
-          return {
-            services: await getServices(),
-          };
-        },
+        loader: servicesLoader,
       },
 
       {

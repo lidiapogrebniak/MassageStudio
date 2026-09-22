@@ -1,12 +1,11 @@
 import styles from "./Contacts.module.css";
 import { texts } from "../../data/texts.uk";
-import { useRouteLoaderData } from "react-router-dom";
 import { buildProfileLink } from "../../utils/socialHelper";
 import { getPhoneDigits } from "../../utils/phoneHelper";
+import { useContacts } from "../../hooks/useContacts";
 
 const Contacts = () => {
-  const companyData = useRouteLoaderData("root");
-  const contacts = companyData ? companyData.contacts : {};
+  const contacts = useContacts();
   const telephoneShort = getPhoneDigits(contacts.phone);
 
   return (

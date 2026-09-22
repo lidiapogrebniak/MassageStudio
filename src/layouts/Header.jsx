@@ -11,10 +11,11 @@ import styles from "./Header.module.css";
 import { texts } from "../data/texts.uk";
 import { buildProfileLink } from "../utils/socialHelper";
 import { getPhoneDigits } from "../utils/phoneHelper";
+import { useContacts } from "../hooks/useContacts";
 import { useState } from "react";
 
-const Header = (props) => {
-  const { contacts } = props;
+const Header = () => {
+  const contacts = useContacts();
   const telephoneShort = getPhoneDigits(contacts.phone);
 
   const [expanded, setExpanded] = useState(false);

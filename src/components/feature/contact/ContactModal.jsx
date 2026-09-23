@@ -20,7 +20,7 @@ function useSendContactStatus() {
       isSuccess: state === "success",
       isValidationError: state === "validationError",
       isError: state === "error",
-      isResolved: state === "success" || state === "error",
+      isResolved: state === "success",
       error,
 
       startLoading: () => {

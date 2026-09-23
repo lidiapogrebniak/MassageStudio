@@ -40,7 +40,14 @@ export default function ContactForm({ formId, sendContactStatus }) {
   };
 
   useEffect(() => {
-    if (window.turnstile && turnstileRef.current) {
+    let cancelled = false;
+    let intervalId = null;
+    let giveupTimeoutId = null;
+
+    const renderWidget = () => {
+      if (cancelled || widgetIdRef.current !== null || !turnstileRef.current) {
+        return;
+      }
       widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
         sitekey: turnstleSiteKey,
         callback: (token) => {
@@ -53,8 +60,44 @@ export default function ContactForm({ formId, sendContactStatus }) {
           setToken(null);
         },
       });
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+      if (giveupTimeoutId !== null) {
+        clearTimeout(giveupTimeoutId);
+        giveupTimeoutId = null;
+      }
+    };
+
+    if (window.turnstile) {
+      renderWidget();
+    } else {
+      intervalId = setInterval(() => {
+        if (!cancelled && window.turnstile) {
+          renderWidget();
+        }
+      }, 300);
+
+      giveupTimeoutId = setTimeout(() => {
+        if (cancelled) return;
+        if (intervalId !== null) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+        if (widgetIdRef.current === null) {
+          setErrors((prev) => ({
+            ...prev,
+            captcha: texts.contactModal.captchaLoadErrorMessage,
+          }));
+        }
+      }, 10000);
     }
+
     return () => {
+      cancelled = true;
+      if (intervalId !== null) clearInterval(intervalId);
+      if (giveupTimeoutId !== null) clearTimeout(giveupTimeoutId);
       if (widgetIdRef.current !== null && window.turnstile) {
         window.turnstile.remove(widgetIdRef.current);
         widgetIdRef.current = null;

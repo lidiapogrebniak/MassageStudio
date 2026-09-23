@@ -9,6 +9,18 @@ import { getPhoneDigits } from "../../../utils/phoneHelper.js";
 import { useContacts } from "../../../hooks/useContacts.js";
 import styles from "./ContactForm.module.css";
 
+function PhoneCustomInput({ error, ...props }) {
+  return (
+    <Form.Group controlId="contactForm.phone" className="mb-3">
+      <Form.Control
+        isInvalid={!!error}
+        placeholder="+38(0__) ___-__-__"
+        {...props}
+      />
+    </Form.Group>
+  );
+}
+
 export default function ContactForm({ formId, sendContactStatus }) {
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
@@ -242,17 +254,8 @@ export default function ContactForm({ formId, sendContactStatus }) {
                 isnumericstring="true"
                 required
                 name="phone"
-                customInput={(props) => {
-                  return (
-                    <Form.Group controlId="contactForm.phone" className="mb-3">
-                      <Form.Control
-                        isInvalid={!!errors.phone}
-                        placeholder="+38(0__) ___-__-__"
-                        {...props}
-                      />
-                    </Form.Group>
-                  );
-                }}
+                error={errors.phone}
+                customInput={PhoneCustomInput}
               />
               <Form.Control.Feedback
                 type="invalid"

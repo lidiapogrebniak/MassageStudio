@@ -11,13 +11,11 @@ import styles from "./ContactForm.module.css";
 
 function PhoneCustomInput({ error, ...props }) {
   return (
-    <Form.Group controlId="contactForm.phone" className="mb-3">
-      <Form.Control
-        isInvalid={!!error}
-        placeholder="+38(0__) ___-__-__"
-        {...props}
-      />
-    </Form.Group>
+    <Form.Control
+      isInvalid={!!error}
+      placeholder="+38(0__) ___-__-__"
+      {...props}
+    />
   );
 }
 
@@ -257,10 +255,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
                 error={errors.phone}
                 customInput={PhoneCustomInput}
               />
-              <Form.Control.Feedback
-                type="invalid"
-                style={{ display: "block" }}
-              >
+              <Form.Control.Feedback type="invalid">
                 {errors.phone}
               </Form.Control.Feedback>
             </Form.Group>

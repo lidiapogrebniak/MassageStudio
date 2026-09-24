@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import ServiceCard from "../../components/feature/ServiceCard";
 import { texts } from "../../data/texts.uk";
 import { useLoaderData } from "react-router-dom";
@@ -6,10 +6,12 @@ import ContactModal from "../../components/feature/contact/ContactModal";
 
 const Services = () => {
   const { services } = useLoaderData();
-  const contactModalRef = React.useRef(null);
-
+  const [showContactModal, setShowContactModal] = useState(false);
   const openContactModal = () => {
-    contactModalRef.current?.open();
+    setShowContactModal(true);
+  };
+  const closeContactModal = () => {
+    setShowContactModal(false);
   };
 
   return (
@@ -29,7 +31,7 @@ const Services = () => {
           </div>
         </div>
       </section>
-      <ContactModal ref={contactModalRef} />
+      <ContactModal show={showContactModal} onClose={closeContactModal} />
     </>
   );
 };

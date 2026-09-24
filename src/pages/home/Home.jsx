@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import HeroSection from "./HeroSection";
 import ServicesSection from "./ServicesSection";
 import { useLoaderData } from "react-router-dom";
@@ -6,10 +6,13 @@ import ContactModal from "../../components/feature/contact/ContactModal";
 
 const Home = () => {
   const data = useLoaderData();
-  const contactModalRef = React.useRef(null);
+  const [showContactModal, setShowContactModal] = useState(false);
 
   const openContactModal = () => {
-    contactModalRef.current?.open();
+    setShowContactModal(true);
+  };
+  const closeContactModal = () => {
+    setShowContactModal(false);
   };
 
   return (
@@ -19,7 +22,7 @@ const Home = () => {
         services={data.featuredServices}
         onCtaButtonClick={openContactModal}
       />
-      <ContactModal ref={contactModalRef} />
+      <ContactModal show={showContactModal} onClose={closeContactModal} />
     </>
   );
 };

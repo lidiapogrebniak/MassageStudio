@@ -1,93 +1,107 @@
-import {
-  forwardRef,
-  useRef,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from "react";
-import Modal from "../../ui/Modal";
-import ContactForm from "./ContactForm";
+import { useCallback, useEffect, useState } from "react";
+import { Modal as RbsModal } from "react-bootstrap";
 import { texts } from "../../../data/texts.uk";
+import { Button } from "react-bootstrap";
+import ContactForm from "./ContactForm";
 
 function useSendContactStatus() {
   const [state, setState] = useState("idle");
   const [error, setError] = useState(null);
 
-  return useMemo(
-    () => ({
-      isIdle: state === "idle",
-      isLoading: state === "loading",
-      isSuccess: state === "success",
-      isValidationError: state === "validationError",
-      isError: state === "error",
-      isResolved: state === "success",
-      error,
+  const startLoading = useCallback(() => {
+    setError(null);
+    setState("loading");
+  }, []);
 
-      startLoading: () => {
-        setError(null);
-        setState("loading");
-      },
+  const setValidationError = useCallback(() => {
+    setError(null);
+    setState("validationError");
+  }, []);
 
-      setValidationError: () => {
-        setError(null);
-        setState("validationError");
-      },
+  const resolveSuccess = useCallback(() => {
+    setState("success");
+  }, []);
 
-      resolveSuccess: () => setState("success"),
+  const resolveError = useCallback((err) => {
+    setError(err);
+    setState("error");
+  }, []);
 
-      resolveError: (err) => {
-        setError(err);
-        setState("error");
-      },
+  const reset = useCallback(() => {
+    setError(null);
+    setState("idle");
+  }, []);
 
-      reset: () => {
-        setError(null);
-        setState("idle");
-      },
-    }),
-    [state, error],
-  );
+  return {
+    isIdle: state === "idle",
+    isLoading: state === "loading",
+    isSuccess: state === "success",
+    isValidationError: state === "validationError",
+    isError: state === "error",
+    isResolved: state === "success",
+    error,
+
+    startLoading,
+    setValidationError,
+    resolveSuccess,
+    resolveError,
+    reset,
+  };
 }
 
-const ContactModal = forwardRef((props, ref) => {
-  const modalRef = useRef(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const contactFormId = "contactForm";
-
+export default function ContactModal({ show, onClose }) {
   const sendContactStatus = useSendContactStatus();
+  const { reset } = sendContactStatus;
 
-  useImperativeHandle(ref, () => {
-    return {
-      open: () => {
-        sendContactStatus.reset();
-        setIsModalOpen(true);
-        modalRef.current?.open();
-      },
-      close: () => {
-        sendContactStatus.reset();
-        setIsModalOpen(false);
-        modalRef.current?.close();
-      },
-    };
-  }, [sendContactStatus]);
+  const handleClose = () => {
+    !sendContactStatus.isLoading && onClose && onClose();
+  };
+
+  useEffect(() => {
+    if (show) {
+      reset();
+    }
+  }, [show, reset]);
 
   return (
-    <Modal
-      ref={modalRef}
-      show={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
-      primaryBtnCaption={texts.contactModal.submitBtnCaption}
-      primaryBtnSubmittingCaption={texts.contactModal.submittingBtnCaption}
-      heading={texts.contactModal.title}
-      submitFormId={contactFormId}
-      requestStatus={sendContactStatus}
+    <RbsModal
+      show={show}
+      onHide={handleClose}
+      backdrop={sendContactStatus.isLoading ? "static" : true}
+      keyboard={!sendContactStatus.isLoading}
     >
-      <ContactForm
-        formId={contactFormId}
-        sendContactStatus={sendContactStatus}
-      />
-    </Modal>
+      <RbsModal.Header closeButton={!sendContactStatus.isLoading}>
+        <RbsModal.Title>{texts.contactModal.title}</RbsModal.Title>
+      </RbsModal.Header>
+      <RbsModal.Body>
+        <ContactForm
+          formId="contactForm"
+          sendContactStatus={sendContactStatus}
+        />
+      </RbsModal.Body>
+      <RbsModal.Footer>
+        {!sendContactStatus.isResolved && (
+          <Button
+            variant="primary"
+            type="submit"
+            className="primaryButton"
+            form="contactForm"
+            disabled={sendContactStatus.isLoading}
+          >
+            {sendContactStatus.isLoading
+              ? texts.contactModal.submittingBtnCaption
+              : texts.contactModal.submitBtnCaption}
+          </Button>
+        )}
+        <Button
+          variant="secondary"
+          className="secondaryButton"
+          onClick={handleClose}
+          disabled={sendContactStatus.isLoading}
+        >
+          {texts.modal.closeBtnCaption}
+        </Button>
+      </RbsModal.Footer>
+    </RbsModal>
   );
-});
-
-export default ContactModal;
+}

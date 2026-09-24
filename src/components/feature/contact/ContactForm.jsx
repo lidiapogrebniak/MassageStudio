@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { texts } from "../../../data/texts.uk";
 import { Alert, Spinner, Form } from "react-bootstrap";
 import { PatternFormat } from "react-number-format";

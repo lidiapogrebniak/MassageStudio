@@ -25,7 +25,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
   const companyPhone = useContacts().phone ?? "";
 
-  const turnstleSiteKey = import.meta.env.VITE_TURNSTILE_API_KEY;
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_API_KEY;
 
   const turnstileRef = useRef(null);
   const widgetIdRef = useRef(null);
@@ -58,7 +58,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
         return;
       }
       widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
-        sitekey: turnstleSiteKey,
+        sitekey: turnstileSiteKey,
         callback: (token) => {
           setToken(token);
         },
@@ -112,7 +112,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
         widgetIdRef.current = null;
       }
     };
-  }, [turnstleSiteKey]);
+  }, [turnstileSiteKey]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -248,7 +248,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
               <PatternFormat
                 format="+38(0##) ###-##-##"
                 mask="_"
-                isnumericstring="true"
+                isNumericString="true"
                 required
                 name="phone"
                 error={errors.phone}

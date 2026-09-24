@@ -21,7 +21,7 @@ const Contacts = () => {
                 width="100%"
                 height="100%"
                 style={{ border: 0, minHeight: 400 }}
-                allowfullscreen=""
+                allowFullscreen=""
                 loading="lazy"
               ></iframe>
             </div>

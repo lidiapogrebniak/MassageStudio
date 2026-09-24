@@ -12,18 +12,18 @@
 }
 
 .footer h3 {
-  color: #2c2c2c;
+  color: var(--text-color);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-size: 0.875rem;
 }
 a.footerLink {
-  color: #5a5a5a !important;
+  color: var(--secondary-color) !important;
   transition: color 0.3s ease;
 }
 a.footerLink:hover {
-  color: #d4a574 !important;
+  color: var(--primary-color) !important;
 }
 .footer svg {
   margin-right: 0.75rem;
@@ -31,9 +31,13 @@ a.footerLink:hover {
 
 .footer .schedule {
   align-items: center !important;
-  color: #5a5a5a;
+  color: var(--secondary-color);
 }
 
 .footer .schedule .scheduleText {
   text-align: left;
+}
+
+.copyright {
+  font-size: 0.875rem;
 }

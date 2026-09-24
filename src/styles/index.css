@@ -5,7 +5,8 @@
   --secondary-color-bg: #9b9696;
   --background-color: #f5f0eb;
   --text-color: #2c2c2c;
-  --linkColor: #333;
+  --link-color: #333;
+  --primary-color-hover: #e7bc91;
 
   font-family: var(--font-family);
   background-color: var(--background-color);
@@ -40,7 +41,7 @@ a:hover {
 }
 .primaryButton:hover {
   border-color: var(--primary-color);
-  background-color: #e7bc91;
+  background-color: var(--primary-color-hover);
   box-shadow: 0 6px 16px rgba(212, 165, 116, 0.4);
 }
 .primaryButton.disabled,

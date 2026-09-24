@@ -22,23 +22,23 @@
   height: 100%;
 }
 .cardTitle {
-  color: #2c2c2c;
+  color: var(--text-color);
   line-height: 1.4;
 }
 .cardFooter {
   margin-top: auto !important;
 }
 .price {
-  color: #d4a574;
+  color: var(--primary-color);
   font-weight: 600;
 }
 .duration {
-  color: #5a5a5a;
+  color: var(--secondary-color);
   font-size: 0.9rem;
 }
 .subscribeButton {
-  background-color: #d4a574;
-  border-color: #d4a574;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   color: #fff;
   padding: 0.625rem;
   border-radius: 12px;
@@ -46,6 +46,6 @@
   font-size: 16px;
 }
 .subscribeButton:hover {
-  background-color: #c69462;
-  border-color: #d4a574;
+  background-color: var(--primary-color-hover);
+  border-color: var(--primary-color);
 }

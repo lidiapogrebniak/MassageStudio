@@ -88,7 +88,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="text-center pt-3">
-          <p className="text-muted mb-0" style={{ fontSize: "0.875rem" }}>
+          <p className={`text-muted mb-0 ${styles.copyright}`}>
             {texts.footer.copyright}
           </p>
         </div>

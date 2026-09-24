@@ -11,3 +11,13 @@
 .turnstileContainer {
   min-height: 71px;
 }
+.formWrapper {
+  position: relative;
+}
+.fieldset {
+  border: none;
+  padding: 0;
+}
+.captchaFeedback {
+  display: block;
+}

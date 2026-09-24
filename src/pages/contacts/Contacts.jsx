@@ -15,12 +15,12 @@ const Contacts = () => {
         <div className="row g-4 align-items-stretch">
           {/*  Map  */}
           <div className="col-lg-7">
-            <div className="map-wrapper shadow rounded overflow-hidden h-100">
+            <div className="shadow rounded overflow-hidden h-100">
               <iframe
                 src={contacts.googleEmbeddedMapLink}
                 width="100%"
                 height="100%"
-                style={{ border: 0, minHeight: 400 }}
+                className={styles.mapFrame}
                 allowFullscreen=""
                 loading="lazy"
               ></iframe>

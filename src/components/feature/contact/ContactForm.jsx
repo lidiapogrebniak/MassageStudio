@@ -210,8 +210,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
         <Alert variant="success">{message}</Alert>
       </div>
       <div
-        style={{ position: "relative" }}
-        className={sendContactStatus.isSuccess ? "d-none" : undefined}
+        className={`${styles.formWrapper} ${sendContactStatus.isSuccess ? "d-none" : ""}`}
       >
         {sendContactStatus.isLoading && (
           <div
@@ -222,7 +221,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
         )}
         <fieldset
           disabled={sendContactStatus.isLoading}
-          style={{ border: "none", padding: 0 }}
+          className={styles.fieldset}
         >
           <Form
             noValidate
@@ -248,7 +247,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
               <PatternFormat
                 format="+38(0##) ###-##-##"
                 mask="_"
-                isNumericString="true"
+                isnumericstring="true"
                 required
                 name="phone"
                 error={errors.phone}
@@ -274,7 +273,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
             {errors.captcha && (
               <Form.Control.Feedback
                 type="invalid"
-                style={{ display: "block" }}
+                className={styles.captchaFeedback}
               >
                 {errors.captcha}
               </Form.Control.Feedback>

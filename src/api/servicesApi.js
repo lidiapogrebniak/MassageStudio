@@ -22,9 +22,3 @@ export async function getFeaturedServices() {
 
   return services.slice(0, 4);
 }
-
-export async function getServiceById(id) {
-  const services = await getServices();
-
-  return services.find((s) => s.id === id);
-}

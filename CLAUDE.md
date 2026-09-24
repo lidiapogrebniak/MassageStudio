@@ -31,9 +31,9 @@ public/data/*.json         # static company/services data
 
 One API route today: `POST /api/contact`, shared logic in `src/api/contact/contactService.js#handleContact()`, called by two thin adapters — `server/server.js` (Express) and `functions/api/contact.js` (Cloudflare). Never duplicate business logic between them.
 
-Pipeline: validate (Zod) → verify Turnstile captcha → check KV-based 24h per-phone cooldown (no-op without a KV binding, so always skipped locally) → POST to third-party service **ForminIt**, which sends the actual email → start cooldown. If `SKIP_EMAIL === "true"`, cooldown+ForminIt are skipped and `{success:true}` returns immediately.
+Pipeline: validate (Zod) → verify Turnstile captcha → check KV-based 24h per-phone cooldown (no-op without a KV binding, so always skipped locally) → POST to third-party service **ForminIt**, which sends the actual email → start cooldown. If `SEND_EMAIL !== "true"`, cooldown+ForminIt are skipped and `{success:true}` returns immediately.
 
-Env vars: `FORMINIT_URL`, `FORMINIT_API_KEY`, `TURNSTILE_SECRET`, `SKIP_EMAIL` (both adapters, loaded from `.env` locally via Node's `loadEnvFile()`); `CONTACT_COOLDOWN_KV` (Cloudflare-only KV binding — production hard-fails without it, no local equivalent).
+Env vars: `FORMINIT_URL`, `FORMINIT_API_KEY`, `TURNSTILE_SECRET`, `SEND_EMAIL` (both adapters, loaded from `.env` locally via Node's `loadEnvFile()`, all required — both adapters fail closed if any is missing); `CONTACT_COOLDOWN_KV` (Cloudflare-only KV binding — production hard-fails without it, no local equivalent).
 
 Compatibility note: shared logic only uses `fetch`/`AbortSignal.timeout`/`zod`/`libphonenumber-js` (Workers-safe). The only Node-specific API, `loadEnvFile()`, is correctly isolated in `server/server.js` — don't let Node-only APIs leak into shared logic, and don't assume Express-working code works under Cloudflare Functions.
 

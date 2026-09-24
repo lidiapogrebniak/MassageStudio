@@ -12,7 +12,7 @@ export async function handleContact(formData, config) {
     FORMINIT_URL,
     FORMINIT_API_KEY,
     TURNSTILE_SECRET,
-    SKIP_EMAIL,
+    SEND_EMAIL,
     CONTACT_COOLDOWN_KV,
   } = config;
 
@@ -26,9 +26,9 @@ export async function handleContact(formData, config) {
   // 2. Captcha verification
   await verifyTurnstile(captchaToken, TURNSTILE_SECRET);
 
-  // if SKIP_EMAIL set to 'true' email sending and cooldown are skipped
-  if (SKIP_EMAIL === "true") {
-    console.info("[skip-email] contact form, email not sent", { name, phone });
+  // if SEND_EMAIL is not 'true', email sending and cooldown are skipped
+  if (SEND_EMAIL !== "true") {
+    console.info("[send-email-disabled] contact form, email not sent", { name, phone });
     return { success: true };
   }
 

@@ -39,5 +39,9 @@ export const contactSchema = z.object({
       return normalized;
     }),
 
-  message: z.string().max(500, ContactErrorCodes.MESSAGE_TOO_LONG).optional(),
+  message: z
+    .string()
+    .trim()
+    .max(500, ContactErrorCodes.MESSAGE_TOO_LONG)
+    .optional(),
 });

@@ -17,7 +17,11 @@ export async function handleContact(formData, config) {
   } = config;
 
   // 1. Validation
-  const { name, phone } = validateContact({
+  const {
+    name,
+    phone,
+    message: trimmedMessage,
+  } = validateContact({
     name: rawName,
     phone: formData.phone,
     message,
@@ -58,7 +62,7 @@ export async function handleContact(formData, config) {
           {
             type: "text",
             name: "message",
-            value: message,
+            value: trimmedMessage,
           },
         ],
       }),

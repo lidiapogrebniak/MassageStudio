@@ -158,7 +158,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...result.data, captchaToken: token }),
         signal: controller.signal,
       });
 

@@ -1,7 +1,7 @@
 :root {
   --nav-links-color: var(--link-color);
   --nav-links-hover-color: var(--primary-color);
-  --nav-links-hover-bg: #f5f0eb;
+  --nav-links-hover-bg: var(--background-color);
 }
 
 :global(.navbar-brand img) {
@@ -42,7 +42,7 @@
 .socialIconLink {
   width: 36px;
   height: 36px;
-  background-color: #f5f0eb;
+  background-color: var(--background-color);
   border: none;
   display: flex;
   align-items: center;
@@ -51,5 +51,5 @@
 }
 
 .socialIconLink:hover {
-  background-color: #e8e0d8;
+  background-color: var(--background-color-alt);
 }

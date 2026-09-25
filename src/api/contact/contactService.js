@@ -28,7 +28,10 @@ export async function handleContact(formData, config) {
 
   // if SEND_EMAIL is not 'true', email sending and cooldown are skipped
   if (SEND_EMAIL !== "true") {
-    console.info("[send-email-disabled] contact form, email not sent", { name, phone });
+    console.info("[send-email-disabled] contact form, email not sent", {
+      name,
+      phone,
+    });
     return { success: true };
   }
 

@@ -1,8 +1,8 @@
 .servicesSection {
   background: linear-gradient(
     135deg,
-    rgb(245, 240, 235) 0%,
-    rgb(232, 224, 216) 100%
+    var(--background-color) 0%,
+    var(--background-color-alt) 100%
   );
   padding-top: 4rem;
   padding-bottom: 4rem;
@@ -11,8 +11,8 @@
 .allServicesBtn {
   align-items: center;
   background-color: transparent;
-  border-color: #333;
-  color: #333;
+  border-color: var(--link-color);
+  color: var(--link-color);
   display: inline-flex;
   padding: 0.875rem 2.5rem;
   border-radius: 50px;

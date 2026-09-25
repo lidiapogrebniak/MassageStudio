@@ -33,7 +33,7 @@ One API route today: `POST /api/contact`, shared logic in `src/api/contact/conta
 
 Pipeline: validate (Zod) → verify Turnstile captcha → check KV-based 24h per-phone cooldown (no-op without a KV binding, so always skipped locally) → POST to third-party service **ForminIt**, which sends the actual email → start cooldown. If `SEND_EMAIL !== "true"`, cooldown+ForminIt are skipped and `{success:true}` returns immediately.
 
-Env vars: `FORMINIT_URL`, `FORMINIT_API_KEY`, `TURNSTILE_SECRET`, `SEND_EMAIL` (both adapters, loaded from `.env` locally via Node's `loadEnvFile()`, all required — both adapters fail closed if any is missing); `CONTACT_COOLDOWN_KV` (Cloudflare-only KV binding — production hard-fails without it, no local equivalent).
+Env vars: `FORMINIT_URL`, `FORMINIT_API_KEY`, `TURNSTILE_SECRET`, `SEND_EMAIL` (both adapters, loaded from `.env` locally via Node's `loadEnvFile()`, all required — both adapters fail closed if any is missing); `CONTACT_COOLDOWN_KV` (Cloudflare-only KV binding — production hard-fails without it, no local equivalent); `VITE_TURNSTILE_API_KEY` (frontend-only, Vite build-time var — the public Turnstile site key consumed by `ContactForm.jsx` to render the captcha widget; without it locally, the captcha never renders).
 
 Compatibility note: shared logic only uses `fetch`/`AbortSignal.timeout`/`zod`/`libphonenumber-js` (Workers-safe). The only Node-specific API, `loadEnvFile()`, is correctly isolated in `server/server.js` — don't let Node-only APIs leak into shared logic, and don't assume Express-working code works under Cloudflare Functions.
 

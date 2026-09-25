@@ -1,14 +1,22 @@
 import { handleContact } from "../../src/api/contact/contactService.js";
 import { toErrorResponse } from "../../src/api/apiErrorResponse.js";
-import { REQUIRED_CONTACT_CONFIG_KEYS, getMissingContactConfigKeys } from "../../src/api/contact/contactConfig.js";
+import {
+  REQUIRED_CONTACT_CONFIG_KEYS,
+  getMissingContactConfigKeys,
+} from "../../src/api/contact/contactConfig.js";
 
 export async function onRequestPost(context) {
   const { request, env } = context;
 
   // Without these, the pipeline silently misbehaves or fails downstream, so in production this is a config error
-  const missingKeys = getMissingContactConfigKeys(env, [...REQUIRED_CONTACT_CONFIG_KEYS, "CONTACT_COOLDOWN_KV"]);
+  const missingKeys = getMissingContactConfigKeys(env, [
+    ...REQUIRED_CONTACT_CONFIG_KEYS,
+    "CONTACT_COOLDOWN_KV",
+  ]);
   if (missingKeys.length > 0) {
-    console.error(`Missing required contact API config: ${missingKeys.join(", ")}`);
+    console.error(
+      `Missing required contact API config: ${missingKeys.join(", ")}`,
+    );
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },

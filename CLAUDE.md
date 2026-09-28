@@ -8,7 +8,7 @@ Server logic runs in two environments — **local:** Express on Node.js; **produ
 
 ## Tech Stack
 
-Vite 7 + React 19 (JS, no TS), `react-router-dom` v7, `react-bootstrap`, `zod`, `libphonenumber-js`. Local API: Express 5. Tooling: ESLint 9 (flat config) + Prettier 3, `concurrently`. No test framework yet. No database — the only persistence is a Cloudflare KV namespace used solely for contact-form rate limiting.
+Vite 7 + React 19 (JS, no TS), `react-router-dom` v7, `react-bootstrap`, `zod`, `libphonenumber-js`. Local API: Express 5. Tooling: ESLint 9 (flat config) + Prettier 3, `concurrently`, husky + lint-staged (pre-commit: `eslint --fix` + `prettier --write` on staged files; config in `package.json`). No test framework yet. No database — the only persistence is a Cloudflare KV namespace used solely for contact-form rate limiting.
 
 ## Directory Structure
 
@@ -45,7 +45,7 @@ Static `company.json`/`services.json` are fetched client-side (no server route) 
 
 ## Scripts
 
-`dev` (Vite), `build`, `server` (Express on :3001), `dev:full` (both, via `concurrently`, gated by lint+format check), `lint`/`lint:fix`, `format`/`format:check`. `vite.config.js` proxies `/api/*` to `localhost:3001` in dev.
+`dev` (Vite), `build`, `server` (Express on :3001), `dev:full` (both, via `concurrently`, gated by lint+format check), `lint`/`lint:fix`, `format`/`format:check`. `vite.config.js` proxies `/api/*` to `localhost:3001` in dev. CI (`.github/workflows/ci.yml`) runs `lint`, `format:check` and `build` on every PR and push to `main`.
 
 ## Testing
 

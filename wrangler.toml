@@ -25,7 +25,7 @@ SEND_EMAIL = "true"
 # Create with: npx wrangler kv namespace create CONTACT_COOLDOWN_KV
 [[kv_namespaces]]
 binding = "CONTACT_COOLDOWN_KV"
-id = "contact_cooldown"
+id = "e9333d879a8e4d0a946fd75e30369efe"
 
 # Preview deployments (non-production branches) don't send real emails.
 # They inherit the KV binding above; only vars are overridden.

@@ -6,6 +6,7 @@ import { contactSchema } from "../../../api/contact/contactScheme.js";
 import { contactErrorMessages } from "../../../data/contact.error.messages.js";
 import { getPhoneDigits } from "../../../utils/phoneHelper.js";
 import { useContacts } from "../../../hooks/useContacts.js";
+import { useClientConfig } from "../../../hooks/useClientConfig.js";
 import { useTurnstile } from "./useTurnstile.js";
 import styles from "./ContactForm.module.css";
 
@@ -28,14 +29,18 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
   const companyPhone = useContacts().phone ?? "";
 
-  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_API_KEY;
+  const { config: clientConfig, error: clientConfigError } = useClientConfig();
 
   const {
     token,
     containerRef: turnstileRef,
-    loadError: captchaLoadError,
+    loadError: turnstileLoadError,
     reset: resetCaptcha,
-  } = useTurnstile(turnstileSiteKey);
+  } = useTurnstile(clientConfig?.turnstileSiteKey);
+
+  const captchaLoadError =
+    turnstileLoadError ||
+    (clientConfigError ? texts.contactModal.captchaLoadErrorMessage : null);
 
   const setFieldErrors = (fieldErrors) => {
     setErrors(

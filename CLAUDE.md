@@ -24,16 +24,18 @@ src/
 
 server/server.js          # Express adapter, local dev only
 functions/api/contact.js  # Cloudflare Pages Function adapter, production
+functions/api/client-config.js  # GET /api/client-config adapter, production
+wrangler.jsonc            # Pages config: vars + KV binding (secrets stay in the dashboard)
 public/data/*.json         # static company/services data
 ```
 
 ## Server Architecture
 
-One API route today: `POST /api/contact`, shared logic in `src/api/contact/contactService.js#handleContact()`, called by two thin adapters — `server/server.js` (Express) and `functions/api/contact.js` (Cloudflare). Never duplicate business logic between them.
+Two API routes: `GET /api/client-config` (public runtime settings for the frontend, today just the Turnstile site key; shared logic in `src/api/clientConfig/clientConfigService.js`, adapters `server/server.js` and `functions/api/client-config.js`) and `POST /api/contact`, shared logic in `src/api/contact/contactService.js#handleContact()`, called by two thin adapters — `server/server.js` (Express) and `functions/api/contact.js` (Cloudflare). Never duplicate business logic between them.
 
 Pipeline: validate (Zod) → verify Turnstile captcha → check KV-based 24h per-phone cooldown (no-op without a KV binding, so always skipped locally) → POST to third-party service **ForminIt**, which sends the actual email → start cooldown. If `SEND_EMAIL !== "true"`, cooldown+ForminIt are skipped and `{success:true}` returns immediately.
 
-Env vars: `FORMINIT_URL`, `FORMINIT_API_KEY`, `TURNSTILE_SECRET`, `SEND_EMAIL` (both adapters, loaded from `.env` locally via Node's `loadEnvFile()`, all required — both adapters fail closed if any is missing); `CONTACT_COOLDOWN_KV` (Cloudflare-only KV binding — production hard-fails without it, no local equivalent); `VITE_TURNSTILE_API_KEY` (frontend-only, Vite build-time var — the public Turnstile site key consumed by `ContactForm.jsx` to render the captcha widget; without it locally, the captcha never renders).
+Env vars: `FORMINIT_URL`, `FORMINIT_API_KEY`, `TURNSTILE_SECRET`, `TURNSTILE_API_KEY`, `SEND_EMAIL` (both adapters, loaded from `.env` locally via Node's `loadEnvFile()`, all required — both adapters fail closed if any is missing); `CONTACT_COOLDOWN_KV` (Cloudflare-only KV binding — production hard-fails without it, no local equivalent); `TURNSTILE_API_KEY` is the public Turnstile site key: not baked into the build, but fetched at runtime by `ContactForm.jsx` from `GET /api/client-config`. Production plain vars and the KV binding live in `wrangler.jsonc`; secrets in the Cloudflare dashboard.
 
 Compatibility note: shared logic only uses `fetch`/`AbortSignal.timeout`/`zod`/`libphonenumber-js` (Workers-safe). The only Node-specific API, `loadEnvFile()`, is correctly isolated in `server/server.js` — don't let Node-only APIs leak into shared logic, and don't assume Express-working code works under Cloudflare Functions.
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { texts } from "../../../data/texts.uk";
 import { Alert, Spinner, Form } from "react-bootstrap";
 import { PatternFormat } from "react-number-format";
@@ -6,10 +6,9 @@ import { contactSchema } from "../../../api/contact/contactScheme.js";
 import { contactErrorMessages } from "../../../data/contact.error.messages.js";
 import { getPhoneDigits } from "../../../utils/phoneHelper.js";
 import { useContacts } from "../../../hooks/useContacts.js";
+import { useTurnstile } from "./useTurnstile.js";
 import styles from "./ContactForm.module.css";
 
-const TURNSTILE_POLL_INTERVAL_MS = 300;
-const TURNSTILE_GIVEUP_TIMEOUT_MS = 10000;
 const CONTACT_REQUEST_TIMEOUT_MS = 15000;
 
 function PhoneCustomInput({ error, ...props }) {
@@ -31,9 +30,12 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
   const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_API_KEY;
 
-  const turnstileRef = useRef(null);
-  const widgetIdRef = useRef(null);
-  const [token, setToken] = useState(null);
+  const {
+    token,
+    containerRef: turnstileRef,
+    loadError: captchaLoadError,
+    reset: resetCaptcha,
+  } = useTurnstile(turnstileSiteKey);
 
   const setFieldErrors = (fieldErrors) => {
     setErrors(
@@ -44,79 +46,6 @@ export default function ContactForm({ formId, sendContactStatus }) {
       ),
     );
   };
-
-  const resetCaptcha = () => {
-    if (widgetIdRef.current !== null && window.turnstile) {
-      window.turnstile.reset(widgetIdRef.current);
-    }
-    setToken(null);
-  };
-
-  useEffect(() => {
-    let cancelled = false;
-    let intervalId = null;
-    let giveupTimeoutId = null;
-
-    const renderWidget = () => {
-      if (cancelled || widgetIdRef.current !== null || !turnstileRef.current) {
-        return;
-      }
-      widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
-        sitekey: turnstileSiteKey,
-        callback: (token) => {
-          setToken(token);
-        },
-        "expired-callback": () => {
-          setToken(null);
-        },
-        "error-callback": () => {
-          setToken(null);
-        },
-      });
-      if (intervalId !== null) {
-        clearInterval(intervalId);
-        intervalId = null;
-      }
-      if (giveupTimeoutId !== null) {
-        clearTimeout(giveupTimeoutId);
-        giveupTimeoutId = null;
-      }
-    };
-
-    if (window.turnstile) {
-      renderWidget();
-    } else {
-      intervalId = setInterval(() => {
-        if (!cancelled && window.turnstile) {
-          renderWidget();
-        }
-      }, TURNSTILE_POLL_INTERVAL_MS);
-
-      giveupTimeoutId = setTimeout(() => {
-        if (cancelled) return;
-        if (intervalId !== null) {
-          clearInterval(intervalId);
-          intervalId = null;
-        }
-        if (widgetIdRef.current === null) {
-          setErrors((prev) => ({
-            ...prev,
-            captcha: texts.contactModal.captchaLoadErrorMessage,
-          }));
-        }
-      }, TURNSTILE_GIVEUP_TIMEOUT_MS);
-    }
-
-    return () => {
-      cancelled = true;
-      if (intervalId !== null) clearInterval(intervalId);
-      if (giveupTimeoutId !== null) clearTimeout(giveupTimeoutId);
-      if (widgetIdRef.current !== null && window.turnstile) {
-        window.turnstile.remove(widgetIdRef.current);
-        widgetIdRef.current = null;
-      }
-    };
-  }, [turnstileSiteKey]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -152,12 +81,6 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
     setErrors({});
 
-    const controller = new AbortController();
-
-    const timeoutId = setTimeout(() => {
-      controller.abort();
-    }, CONTACT_REQUEST_TIMEOUT_MS);
-
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -165,7 +88,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ ...result.data, captchaToken: token }),
-        signal: controller.signal,
+        signal: AbortSignal.timeout(CONTACT_REQUEST_TIMEOUT_MS),
       });
 
       if (res.ok) {
@@ -196,7 +119,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
         new Error("Failed to send contact message"),
       );
     } catch (error) {
-      if (error.name === "AbortError") {
+      if (error.name === "TimeoutError") {
         setMessage(texts.contactModal.timeoutErrorMessage);
         console.error("Request timed out:", error);
       } else {
@@ -205,8 +128,6 @@ export default function ContactForm({ formId, sendContactStatus }) {
       }
       resetCaptcha();
       sendContactStatus.resolveError(error);
-    } finally {
-      clearTimeout(timeoutId);
     }
   }
 
@@ -276,12 +197,12 @@ export default function ContactForm({ formId, sendContactStatus }) {
               </Form.Control.Feedback>
             </Form.Group>
             <div className={styles.turnstileContainer} ref={turnstileRef}></div>
-            {errors.captcha && (
+            {(errors.captcha || captchaLoadError) && (
               <Form.Control.Feedback
                 type="invalid"
                 className={styles.captchaFeedback}
               >
-                {errors.captcha}
+                {errors.captcha || captchaLoadError}
               </Form.Control.Feedback>
             )}
             {message && <Alert variant="danger">{message}</Alert>}

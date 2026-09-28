@@ -3,7 +3,7 @@
 # dashboard fields become read-only. Secrets still live in the dashboard.
 #
 # Secrets (NOT in this file). Set them per environment with
-#   npx wrangler pages secret put <NAME> --project-name massage-studio
+#   npx wrangler pages secret put <NAME> --project-name massagestudio
 # or in Dashboard -> Pages project -> Settings -> Variables and Secrets:
 #   FORMINIT_URL, FORMINIT_API_KEY, TURNSTILE_SECRET
 #
@@ -13,7 +13,7 @@
 # Local dev uses Express + .env (see .env.example), not Wrangler. If you ever run
 # `wrangler pages dev`, put the secrets in .dev.vars (gitignored).
 
-name = "massage-studio"
+name = "massagestudio"
 compatibility_date = "2026-09-01"
 pages_build_output_dir = "./dist"
 

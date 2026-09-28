@@ -8,7 +8,7 @@ Server logic runs in two environments — **local:** Express on Node.js; **produ
 
 ## Tech Stack
 
-Vite 7 + React 19 (JS, no TS), `react-router-dom` v7, `react-bootstrap`, `zod`, `libphonenumber-js`. Local API: Express 5. Tooling: ESLint 9 (flat config) + Prettier 3, `concurrently`. No test framework yet. No database — the only persistence is a Cloudflare KV namespace used solely for contact-form rate limiting.
+Vite 7 + React 19 (JS, no TS), `react-router-dom` v7, `react-bootstrap`, `zod`, `libphonenumber-js`. Local API: Express 5. Tooling: ESLint 9 (flat config) + Prettier 3, `concurrently`, husky + lint-staged (pre-commit: `eslint --fix` + `prettier --write` on staged files; config in `package.json`). No test framework yet. No database — the only persistence is a Cloudflare KV namespace used solely for contact-form rate limiting.
 
 ## Directory Structure
 

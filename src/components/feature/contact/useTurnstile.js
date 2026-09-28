@@ -18,6 +18,9 @@ export function useTurnstile(siteKey) {
   };
 
   useEffect(() => {
+    // The site key arrives asynchronously from /api/client-config
+    if (!siteKey) return;
+
     let cancelled = false;
     let intervalId = null;
     let giveupTimeoutId = null;

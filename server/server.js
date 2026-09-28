@@ -2,6 +2,7 @@ import express from "express";
 import { handleContact } from "../src/api/contact/contactService.js";
 import { toErrorResponse } from "../src/api/apiErrorResponse.js";
 import { getMissingContactConfigKeys } from "../src/api/contact/contactConfig.js";
+import { getClientConfig } from "../src/api/clientConfig/clientConfigService.js";
 import { loadEnvFile } from "node:process";
 
 loadEnvFile();
@@ -10,6 +11,7 @@ const contactConfig = {
   FORMINIT_URL: process.env.FORMINIT_URL,
   FORMINIT_API_KEY: process.env.FORMINIT_API_KEY,
   TURNSTILE_SECRET: process.env.TURNSTILE_SECRET,
+  TURNSTILE_API_KEY: process.env.TURNSTILE_API_KEY,
   SEND_EMAIL: process.env.SEND_EMAIL,
 };
 
@@ -23,6 +25,10 @@ if (missingKeys.length > 0) {
 
 const app = express();
 app.use(express.json());
+
+app.get("/api/client-config", (req, res) => {
+  res.json(getClientConfig(contactConfig));
+});
 
 app.post("/api/contact", async (req, res) => {
   try {

@@ -1,0 +1,32 @@
+# Cloudflare Pages config (production). Once this file exists, Cloudflare treats it
+# as the source of truth for the project's bindings and plain-text vars; the matching
+# dashboard fields become read-only. Secrets still live in the dashboard.
+#
+# Secrets (NOT in this file). Set them per environment with
+#   npx wrangler pages secret put <NAME> --project-name massage-studio
+# or in Dashboard -> Pages project -> Settings -> Variables and Secrets:
+#   FORMINIT_URL, FORMINIT_API_KEY, TURNSTILE_SECRET
+#
+# Build-time var (Vite, not used by Functions): VITE_TURNSTILE_API_KEY stays in the
+# dashboard build settings.
+#
+# Local dev uses Express + .env (see .env.example), not Wrangler. If you ever run
+# `wrangler pages dev`, put the secrets in .dev.vars (gitignored).
+
+name = "massage-studio"
+compatibility_date = "2026-09-01"
+pages_build_output_dir = "./dist"
+
+[vars]
+SEND_EMAIL = "true"
+
+# Per-phone 24h cooldown for POST /api/contact. The function returns 500 without it.
+# Create with: npx wrangler kv namespace create CONTACT_COOLDOWN_KV
+[[kv_namespaces]]
+binding = "CONTACT_COOLDOWN_KV"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Preview deployments (non-production branches) don't send real emails.
+# They inherit the KV binding above; only vars are overridden.
+[env.preview.vars]
+SEND_EMAIL = "false"

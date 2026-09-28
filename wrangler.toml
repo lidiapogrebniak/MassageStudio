@@ -7,8 +7,9 @@
 # or in Dashboard -> Pages project -> Settings -> Variables and Secrets:
 #   FORMINIT_URL, FORMINIT_API_KEY, TURNSTILE_SECRET
 #
-# Build-time var (Vite, not used by Functions): VITE_TURNSTILE_API_KEY stays in the
-# dashboard build settings.
+# Build-time var (Vite, not used by Functions): VITE_TURNSTILE_API_KEY is the public
+# Turnstile site key and lives in .env.production, because dashboard vars don't reach
+# the build once this file exists.
 #
 # Local dev uses Express + .env (see .env.example), not Wrangler. If you ever run
 # `wrangler pages dev`, put the secrets in .dev.vars (gitignored).

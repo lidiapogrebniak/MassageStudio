@@ -10,6 +10,7 @@ const contactConfig = {
   FORMINIT_URL: process.env.FORMINIT_URL,
   FORMINIT_API_KEY: process.env.FORMINIT_API_KEY,
   TURNSTILE_SECRET: process.env.TURNSTILE_SECRET,
+  TURNSTILE_API_KEY: process.env.TURNSTILE_API_KEY,
   SEND_EMAIL: process.env.SEND_EMAIL,
 };
 

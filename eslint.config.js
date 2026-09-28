@@ -51,5 +51,13 @@ export default [
       },
     },
   },
+  {
+    files: ["functions/**/*.js"],
+    languageOptions: {
+      globals: {
+        HTMLRewriter: "readonly",
+      },
+    },
+  },
   prettierConfig,
 ];

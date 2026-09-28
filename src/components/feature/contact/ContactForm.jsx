@@ -7,6 +7,7 @@ import { contactErrorMessages } from "../../../data/contact.error.messages.js";
 import { getPhoneDigits } from "../../../utils/phoneHelper.js";
 import { useContacts } from "../../../hooks/useContacts.js";
 import { useTurnstile } from "./useTurnstile.js";
+import { getTurnstileSiteKey } from "../../../utils/turnstileSiteKey.js";
 import styles from "./ContactForm.module.css";
 
 const CONTACT_REQUEST_TIMEOUT_MS = 15000;
@@ -28,7 +29,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
   const companyPhone = useContacts().phone ?? "";
 
-  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_API_KEY;
+  const turnstileSiteKey = getTurnstileSiteKey();
 
   const {
     token,

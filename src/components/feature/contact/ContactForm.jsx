@@ -8,6 +8,10 @@ import { getPhoneDigits } from "../../../utils/phoneHelper.js";
 import { useContacts } from "../../../hooks/useContacts.js";
 import styles from "./ContactForm.module.css";
 
+const TURNSTILE_POLL_INTERVAL_MS = 300;
+const TURNSTILE_GIVEUP_TIMEOUT_MS = 10000;
+const CONTACT_REQUEST_TIMEOUT_MS = 15000;
+
 function PhoneCustomInput({ error, ...props }) {
   return (
     <Form.Control
@@ -86,7 +90,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
         if (!cancelled && window.turnstile) {
           renderWidget();
         }
-      }, 300);
+      }, TURNSTILE_POLL_INTERVAL_MS);
 
       giveupTimeoutId = setTimeout(() => {
         if (cancelled) return;
@@ -100,7 +104,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
             captcha: texts.contactModal.captchaLoadErrorMessage,
           }));
         }
-      }, 10000);
+      }, TURNSTILE_GIVEUP_TIMEOUT_MS);
     }
 
     return () => {
@@ -142,6 +146,8 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
       sendContactStatus.setValidationError();
       return;
+    } else {
+      setValidated(true);
     }
 
     setErrors({});
@@ -150,7 +156,7 @@ export default function ContactForm({ formId, sendContactStatus }) {
 
     const timeoutId = setTimeout(() => {
       controller.abort();
-    }, 15000); // 15 seconds
+    }, CONTACT_REQUEST_TIMEOUT_MS);
 
     try {
       const res = await fetch("/api/contact", {

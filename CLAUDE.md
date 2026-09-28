@@ -45,7 +45,7 @@ Static `company.json`/`services.json` are fetched client-side (no server route) 
 
 ## Scripts
 
-`dev` (Vite), `build`, `server` (Express on :3001), `dev:full` (both, via `concurrently`, gated by lint+format check), `lint`/`lint:fix`, `format`/`format:check`. `vite.config.js` proxies `/api/*` to `localhost:3001` in dev.
+`dev` (Vite), `build`, `server` (Express on :3001), `dev:full` (both, via `concurrently`, gated by lint+format check), `lint`/`lint:fix`, `format`/`format:check`. `vite.config.js` proxies `/api/*` to `localhost:3001` in dev. CI (`.github/workflows/ci.yml`) runs `lint`, `format:check` and `build` on every PR and push to `main`.
 
 ## Testing
 
